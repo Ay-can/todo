@@ -15,8 +15,11 @@ export const addTodoToWorkspace = (workspace, todo) => {
   workspace.todoItems.push(todo);
 };
 
-export const removeTodoFromWorkspace = (workspace, todo) => {
-  const todoItemIndex = workspace.todoItems.findIndex((elem) => elem === todo);
+export const removeTodoFromWorkspace = (workspace, todoTitle) => {
+  const todoItemIndex = workspace.todoItems.findIndex(
+    (elem) => elem.title === todoTitle
+  );
+  console.log(todoItemIndex);
   workspace.todoItems.splice(todoItemIndex, 1);
 };
 
