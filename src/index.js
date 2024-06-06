@@ -1,3 +1,4 @@
+import style from "./style.css";
 import * as workspace from "./workspace.js";
 import { createTodoItem } from "./todo.js";
 
