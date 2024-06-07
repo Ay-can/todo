@@ -71,18 +71,23 @@ button {
   grid-column: 2;
 }
 
-.items-container {
+.todo-items {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.items-container > * {
+.todo-items > * {
   border: 3px dashed rgb(226, 183, 20);
   padding: 16px;
   border-radius: 10px;
   font-weight: 700;
   width: 70%;
+}
+
+.todo-items > *:hover {
+  cursor: pointer;
+  background-color: rgb(202, 71, 84, 0.5);
 }
 
 .footer {
@@ -187,4 +192,8 @@ label[for="workspace-title"] {
 
 .delete-workspace-item::after {
   content: "Delete";
+}
+
+.highlighted-workspace {
+  background-color: rgb(202, 71, 84);
 }
