@@ -8,14 +8,14 @@
   <body>
     <div class="sidebar-workspaces">
       <button type="button">Add Workspace</button>
-      <div class="workspace-list">
-        <div>Today</div>
-        <div>This Week</div>
-        <div>This Month</div>
-        <div class="active-workspace">Work</div>
-        <div>School</div>
-        <div>Personal</div>
-      </div>
+      <dialog>
+        <form action="">
+          <label for="workspace-title">Title:</label>
+          <input type="text" id="workspace-title" />
+          <button type="button">Close</button>
+        </form>
+      </dialog>
+      <div class="workspace-list"></div>
     </div>
 
     <div class="content">

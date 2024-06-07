@@ -14,3 +14,23 @@ workspace.addTodoToWorkspace(
 );
 
 workspace.displayWorkspaceItems(school);
+
+const workspaces = [];
+
+// temp just to get the flow going
+// put in modules
+
+const workspacesDom = document.querySelector(".workspace-list");
+const addWorkspaceBtn = document.querySelector(".sidebar-workspaces > button");
+const modal = document.querySelector("dialog");
+const closeBtn = document.querySelector("form > button");
+
+addWorkspaceBtn.addEventListener("click", () => {
+  modal.showModal();
+  workspaces.push(workspace.createWorkspace("test"));
+  console.log(workspaces);
+});
+
+closeBtn.addEventListener("click", () => {
+  modal.close();
+});
