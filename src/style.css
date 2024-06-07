@@ -90,6 +90,12 @@ button {
   font-weight: 900;
 }
 
+.footer > p {
+  padding: 16px;
+  background-color: rgb(202, 71, 84);
+  border-radius: 10px;
+}
+
 a:link,
 a:visited {
   color: rgb(226, 183, 20);
