@@ -1,4 +1,5 @@
 import style from "./style.css";
+
 import * as workspace from "./workspace.js";
 import { createTodoItem } from "./todo.js";
 
@@ -69,9 +70,14 @@ function displayWorkspaces() {
   removeDisplayedWorkspaces();
   workspaces.forEach((workspace) => {
     const workspaceItem = document.createElement("div");
+    const deleteBtn = document.createElement("button");
+
     workspaceItem.classList.add("workspace-item");
+    deleteBtn.classList.add("delete-workspace-item");
     workspaceItem.innerText = workspace.title;
 
+    workspaceItem.appendChild(deleteBtn);
     workspacesDomList.appendChild(workspaceItem);
+    console.log(workspaces);
   });
 }

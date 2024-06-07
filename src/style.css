@@ -32,16 +32,19 @@ body {
 .workspace-list {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  align-self: flex-start;
+  align-items: center;
   gap: 16px;
+  width: 100%;
 }
 
 .workspace-list > * {
   background-color: rgb(50, 52, 55);
   border-radius: 10px;
-  padding: 8px;
-  width: 150px;
+  padding: 16px;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 button {
@@ -153,4 +156,25 @@ label[for="workspace-title"] {
 .error-message {
   font-size: 1rem;
   align-self: center;
+}
+
+.delete-workspace-item {
+  display: inline-block;
+  font-size: 0.9rem;
+  color: rgb(226, 183, 20);
+  text-align: center;
+  padding: 8px;
+  background-color: rgb(202, 71, 84);
+  border: none;
+
+  cursor: pointer;
+}
+
+.delete-workspace-item:active {
+  position: relative;
+  top: 3px;
+}
+
+.delete-workspace-item::after {
+  content: "Delete";
 }
