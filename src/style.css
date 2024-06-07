@@ -9,7 +9,7 @@ body {
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   background-color: rgb(50, 52, 55);
   color: rgb(209, 208, 197);
-  box-sizing: content-box;
+  box-sizing: border-box;
 }
 
 .sidebar-workspaces {
@@ -97,4 +97,55 @@ a {
 
 .active-workspace {
   background-color: rgb(202, 71, 84);
+}
+
+dialog {
+  width: 600px;
+  height: 140px;
+  padding: 32px;
+  border-radius: 6px;
+  border: 4px dashed rgb(50, 52, 55);
+  background-color: rgb(226, 183, 20);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+input {
+  padding: 8px;
+  border-radius: 4px;
+  border: 2px solid rgb(50, 52, 55);
+  width: 60%;
+}
+
+input:focus {
+  outline: none;
+  border: 2px solid rgb(202, 71, 84);
+}
+
+.workspace-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+label[for="workspace-title"] {
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+  width: fit-content;
+}
+
+.buttons {
+  margin-top: 8px;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.buttons > * {
+  width: 20%;
 }

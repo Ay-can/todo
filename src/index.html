@@ -10,9 +10,14 @@
       <button type="button">Add Workspace</button>
       <dialog>
         <form action="">
-          <label for="workspace-title">Title:</label>
-          <input type="text" id="workspace-title" />
-          <button type="button">Close</button>
+          <div class="workspace-field">
+            <label for="workspace-title">New Workspace</label>
+            <input type="text" id="workspace-title" placeholder="Work" />
+          </div>
+          <div class="buttons">
+            <button type="button">Add</button>
+            <button type="button">Close</button>
+          </div>
         </form>
       </dialog>
       <div class="workspace-list"></div>

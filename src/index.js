@@ -27,7 +27,9 @@ const closeBtn = document.querySelector("form > button");
 
 addWorkspaceBtn.addEventListener("click", () => {
   modal.showModal();
-  workspaces.push(workspace.createWorkspace("test"));
+  const input = document.querySelector("input");
+
+  workspaces.push(workspace.createWorkspace(input.innerText));
   console.log(workspaces);
 });
 
