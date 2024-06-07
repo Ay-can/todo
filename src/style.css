@@ -101,7 +101,7 @@ a {
 
 dialog {
   width: 600px;
-  height: 140px;
+  height: 160px;
   padding: 32px;
   border-radius: 6px;
   border: 4px dashed rgb(50, 52, 55);
@@ -148,4 +148,9 @@ label[for="workspace-title"] {
 
 .buttons > * {
   width: 20%;
+}
+
+.error-message {
+  font-size: 1rem;
+  align-self: center;
 }

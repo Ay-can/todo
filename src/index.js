@@ -20,19 +20,58 @@ const workspaces = [];
 // temp just to get the flow going
 // put in modules
 
-const workspacesDom = document.querySelector(".workspace-list");
-const addWorkspaceBtn = document.querySelector(".sidebar-workspaces > button");
+const workspacesDomList = document.querySelector(".workspace-list");
+const openModalBtn = document.querySelector(".sidebar-workspaces > button");
 const modal = document.querySelector("dialog");
-const closeBtn = document.querySelector("form > button");
+const closeBtn = document.querySelector("#close-btn");
+const addBtn = document.querySelector("#add-btn");
+const form = document.querySelector("form");
 
-addWorkspaceBtn.addEventListener("click", () => {
-  modal.showModal();
+function addItemToWorkspace() {
   const input = document.querySelector("input");
+  if (input.value !== "") {
+    workspaces.push(workspace.createWorkspace(input.value));
+    displayWorkspaces();
+    input.value = "";
+    modal.close();
+  } else {
+    const errorMsg = document.querySelector(".error-message");
+    errorMsg.style.color = "red";
+    errorMsg.innerText = "Enter atleast 1 letter";
+  }
+}
 
-  workspaces.push(workspace.createWorkspace(input.innerText));
-  console.log(workspaces);
+form.onkeydown = (e) => {
+  if (e.keyCode === 13) {
+    e.preventDefault();
+    addItemToWorkspace();
+  }
+};
+
+openModalBtn.addEventListener("click", () => {
+  modal.showModal();
+});
+
+addBtn.addEventListener("click", () => {
+  addItemToWorkspace();
 });
 
 closeBtn.addEventListener("click", () => {
   modal.close();
 });
+
+function removeDisplayedWorkspaces() {
+  workspacesDomList.replaceChildren();
+}
+
+function displayWorkspaces() {
+  // clear before populating dom again
+  removeDisplayedWorkspaces();
+  workspaces.forEach((workspace) => {
+    const workspaceItem = document.createElement("div");
+    workspaceItem.classList.add("workspace-item");
+    workspaceItem.innerText = workspace.title;
+
+    workspacesDomList.appendChild(workspaceItem);
+  });
+}
