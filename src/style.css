@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  padding: 0;
+  padding: 30px;
   display: grid;
   grid-template-columns: 1fr 4fr;
   grid-template-rows: 7fr 1fr;
@@ -56,6 +56,9 @@ button {
   padding: 8px;
   background-color: rgb(50, 52, 55);
   color: rgb(209, 208, 197);
+  border: none;
+
+  cursor: pointer;
 }
 
 .content {

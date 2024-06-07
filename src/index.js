@@ -68,16 +68,21 @@ function removeDisplayedWorkspaces() {
 function displayWorkspaces() {
   // clear before populating dom again
   removeDisplayedWorkspaces();
-  workspaces.forEach((workspace) => {
+  workspaces.forEach((workspace, index) => {
     const workspaceItem = document.createElement("div");
     const deleteBtn = document.createElement("button");
 
+    deleteBtn.addEventListener("click", () => {
+      workspaces.splice(index, 1);
+      displayWorkspaces();
+    });
+
     workspaceItem.classList.add("workspace-item");
+    deleteBtn.id = index;
     deleteBtn.classList.add("delete-workspace-item");
     workspaceItem.innerText = workspace.title;
 
     workspaceItem.appendChild(deleteBtn);
     workspacesDomList.appendChild(workspaceItem);
-    console.log(workspaces);
   });
 }
