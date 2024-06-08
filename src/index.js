@@ -2,6 +2,7 @@ import style from "./style.css";
 
 import * as workspace from "./workspace.js";
 import { createTodoItem } from "./todo.js";
+import "./ui.js";
 
 let school = workspace.createWorkspace("school");
 workspace.addTodoToWorkspace(
@@ -22,9 +23,7 @@ const workspaces = [school];
 // put in modules
 
 const workspacesDomList = document.querySelector(".workspace-list");
-const openModalBtn = document.querySelector(".sidebar-workspaces > button");
 const modal = document.querySelector("dialog");
-const closeBtn = document.querySelector("#close-btn");
 const addBtn = document.querySelector("#add-btn");
 const form = document.querySelector("form");
 
@@ -49,16 +48,8 @@ form.onkeydown = (e) => {
   }
 };
 
-openModalBtn.addEventListener("click", () => {
-  modal.showModal();
-});
-
 addBtn.addEventListener("click", () => {
   addItemToWorkspace();
-});
-
-closeBtn.addEventListener("click", () => {
-  modal.close();
 });
 
 function removeDisplayedWorkspaces() {
