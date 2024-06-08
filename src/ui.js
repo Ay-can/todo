@@ -2,8 +2,7 @@
   This module is for dom related functionality
 */
 
-import { addWorkspace } from "./workspace";
-import { displayWorkspaces } from ".";
+import { addWorkspace, workspaces } from "./workspace";
 
 // draw all workspaces
 const dialog = document.querySelector("dialog");
@@ -11,7 +10,7 @@ const openDialogBtn = document.querySelector(".sidebar-workspaces > button");
 const closeDialogBtn = document.querySelector("#close-btn");
 const addWorkspaceBtn = document.querySelector("#add-btn");
 const form = document.querySelector("form");
-const domWorkspacesContainer = document.querySelector(".workspace-list");
+const workspacesContainerDom = document.querySelector(".workspace-container");
 
 openDialogBtn.addEventListener("click", () => {
   dialog.showModal();
@@ -22,6 +21,19 @@ closeDialogBtn.addEventListener("click", () => {
 });
 
 addWorkspaceBtn.addEventListener("click", () => {
+  addWorkspaceDom();
+});
+
+form.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    addWorkspaceDom();
+  }
+});
+
+const removeWorkspacesDom = () => workspacesContainerDom.replaceChildren();
+
+function addWorkspaceDom() {
   const input = document.querySelector("input");
   if (input.value.trim() !== "") {
     addWorkspace(input.value);
@@ -33,14 +45,31 @@ addWorkspaceBtn.addEventListener("click", () => {
     errorMsg.style.color = "red";
     errorMsg.innerText = "Enter atleast 1 letter";
   }
-});
+}
 
-form.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    console.log("hello");
-    addItemToWorkspace();
-  }
-});
+function displayWorkspaces() {
+  // clear before populating dom again
+  removeWorkspacesDom();
 
-const removeDomWorkspaces = () => 
+  workspaces.forEach((workspace, index) => {
+    const workspaceItem = document.createElement("div");
+    const deleteBtn = document.createElement("button");
+
+    deleteBtn.addEventListener("click", () => {
+      workspaces.splice(index, 1);
+      displayWorkspaces();
+    });
+
+    workspaceItem.classList.add("workspace-item");
+    deleteBtn.classList.add("delete-workspace-item");
+    workspaceItem.innerText = workspace.title;
+    workspaceItem.id = index;
+
+    workspaceItem.appendChild(deleteBtn);
+    workspacesContainerDom.appendChild(workspaceItem);
+  });
+
+  //enableHighlightWorkspace();
+}
+
+displayWorkspaces();

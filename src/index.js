@@ -1,56 +1,10 @@
 import style from "./style.css";
 
-import * as workspace from "./workspace.js";
 import { createTodoItem } from "./todo.js";
 import "./ui.js";
 
-let school = workspace.createWorkspace("school");
-workspace.addTodoToWorkspace(
-  school,
-  createTodoItem("finish odin project", "life depends on it really")
-);
-
-workspace.addTodoToWorkspace(
-  school,
-  createTodoItem("make this code better", "I really suck at coding")
-);
-
-workspace.displayWorkspaceItems(school);
-
 // temp just to get the flow going
 // put in modules
-
-const workspacesDomList = document.querySelector(".workspace-list");
-
-function removeDisplayedWorkspaces() {
-  workspacesDomList.replaceChildren();
-}
-
-export function displayWorkspaces() {
-  // clear before populating dom again
-  removeDisplayedWorkspaces();
-
-  workspace.workspaces.forEach((workspace, index) => {
-    const workspaceItem = document.createElement("div");
-    const deleteBtn = document.createElement("button");
-
-    deleteBtn.addEventListener("click", () => {
-      workspaces.splice(index, 1);
-      displayWorkspaces();
-    });
-
-    workspaceItem.classList.add("workspace-item");
-    deleteBtn.id = index;
-    deleteBtn.classList.add("delete-workspace-item");
-    workspaceItem.innerText = workspace.title;
-    workspaceItem.id = index;
-
-    workspaceItem.appendChild(deleteBtn);
-    workspacesDomList.appendChild(workspaceItem);
-  });
-
-  enableHighlightWorkspace();
-}
 
 function enableHighlightWorkspace() {
   const workspaceItems = document.querySelectorAll(".workspace-item");
@@ -90,5 +44,3 @@ function displayWorkspaceTodo(workspace) {
 function removeWorkspaceTodo() {
   todoContainer.replaceChildren();
 }
-
-displayWorkspaces();

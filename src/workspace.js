@@ -4,7 +4,7 @@
 // A workspace should contain a list of todo items
 // You can delete a workspace
 
-export const workspaces = [];
+export const workspaces = [{ title: "test" }];
 
 export const createWorkspace = (title) => {
   return {
@@ -23,12 +23,6 @@ export const removeTodoFromWorkspace = (workspace, todoTitle) => {
   );
   console.log(todoItemIndex);
   workspace.todoItems.splice(todoItemIndex, 1);
-};
-
-export const displayWorkspaceItems = (workspace) => {
-  workspace.todoItems.forEach((elem) => {
-    console.log(elem);
-  });
 };
 
 export const addWorkspace = (title) => {
