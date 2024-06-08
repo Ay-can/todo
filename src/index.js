@@ -17,50 +17,20 @@ workspace.addTodoToWorkspace(
 
 workspace.displayWorkspaceItems(school);
 
-const workspaces = [school];
-
 // temp just to get the flow going
 // put in modules
 
 const workspacesDomList = document.querySelector(".workspace-list");
-const modal = document.querySelector("dialog");
-const addBtn = document.querySelector("#add-btn");
-const form = document.querySelector("form");
-
-function addItemToWorkspace() {
-  const input = document.querySelector("input");
-  if (input.value !== "") {
-    workspaces.push(workspace.createWorkspace(input.value));
-    displayWorkspaces();
-    input.value = "";
-    modal.close();
-  } else {
-    const errorMsg = document.querySelector(".error-message");
-    errorMsg.style.color = "red";
-    errorMsg.innerText = "Enter atleast 1 letter";
-  }
-}
-
-form.onkeydown = (e) => {
-  if (e.keyCode === 13) {
-    e.preventDefault();
-    addItemToWorkspace();
-  }
-};
-
-addBtn.addEventListener("click", () => {
-  addItemToWorkspace();
-});
 
 function removeDisplayedWorkspaces() {
   workspacesDomList.replaceChildren();
 }
 
-function displayWorkspaces() {
+export function displayWorkspaces() {
   // clear before populating dom again
   removeDisplayedWorkspaces();
 
-  workspaces.forEach((workspace, index) => {
+  workspace.workspaces.forEach((workspace, index) => {
     const workspaceItem = document.createElement("div");
     const deleteBtn = document.createElement("button");
 
