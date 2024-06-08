@@ -68,6 +68,7 @@ function removeDisplayedWorkspaces() {
 function displayWorkspaces() {
   // clear before populating dom again
   removeDisplayedWorkspaces();
+
   workspaces.forEach((workspace, index) => {
     const workspaceItem = document.createElement("div");
     const deleteBtn = document.createElement("button");
@@ -84,5 +85,25 @@ function displayWorkspaces() {
 
     workspaceItem.appendChild(deleteBtn);
     workspacesDomList.appendChild(workspaceItem);
+  });
+
+  enableHighlightWorkspace();
+}
+
+function enableHighlightWorkspace() {
+  const workspaceItems = document.querySelectorAll(".workspace-item");
+  workspaceItems.forEach((workspace) => {
+    workspace.addEventListener("click", () => {
+      let temp = Array.from(workspaceItems);
+      if (
+        temp.some((elem) => elem.classList.contains("highlighted-workspace"))
+      ) {
+        const previous = temp.find((elem) =>
+          elem.classList.contains("highlighted-workspace")
+        );
+        previous.classList.toggle("highlighted-workspace");
+      }
+      workspace.classList.toggle("highlighted-workspace");
+    });
   });
 }
