@@ -11,6 +11,7 @@ const openDialogBtn = document.querySelector(".sidebar-workspaces > button");
 const closeDialogBtn = document.querySelector("#close-btn");
 const addWorkspaceBtn = document.querySelector("#add-btn");
 const form = document.querySelector("form");
+const domWorkspacesContainer = document.querySelector(".workspace-list");
 
 openDialogBtn.addEventListener("click", () => {
   dialog.showModal();
@@ -41,3 +42,5 @@ form.addEventListener("keydown", (e) => {
     addItemToWorkspace();
   }
 });
+
+const removeDomWorkspaces = () => 

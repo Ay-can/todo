@@ -31,7 +31,7 @@ body {
   font-weight: 700;
 }
 
-.workspace-list {
+.workspace-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,7 +39,7 @@ body {
   width: 100%;
 }
 
-.workspace-list > * {
+.workspace-container > * {
   background-color: rgb(50, 52, 55);
   border-radius: 10px;
   padding: 16px;
