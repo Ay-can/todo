@@ -229,7 +229,7 @@ button:active {
 
 .todo-field {
   display: flex;
-  flex-direction: column;
+  gap: 16px;
   justify-content: center;
   align-items: center;
 }
@@ -238,4 +238,5 @@ button:active {
   font-size: 1.1rem;
   font-weight: 700;
   color: rgb(226, 183, 20);
+  margin: 0;
 }
