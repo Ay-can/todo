@@ -15,8 +15,7 @@ body {
 }
 
 .sidebar-workspaces {
-  background-color: rgb(226, 183, 20);
-  border: 3px dashed rgb(50, 52, 55);
+  border: 3px dashed rgb(226, 183, 20);
   border-radius: 10px;
   padding: 16px;
   display: flex;
@@ -47,23 +46,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-button {
-  font: inherit;
-  border-radius: 10px;
-  width: fit-content;
-  padding: 8px;
-  background-color: rgb(50, 52, 55);
-  color: rgb(209, 208, 197);
-  border: none;
-
-  cursor: pointer;
-}
-
-button:active {
-  position: relative;
-  top: 3px;
 }
 
 .content {
@@ -131,8 +113,8 @@ dialog {
   height: 160px;
   padding: 32px;
   border-radius: 6px;
-  border: 4px dashed rgb(50, 52, 55);
-  background-color: rgb(226, 183, 20);
+  border: 4px dashed rgb(226, 183, 20);
+  background: none;
 }
 
 form {
@@ -164,6 +146,7 @@ label[for="workspace-title"] {
   font-size: 1.3rem;
   margin-bottom: 6px;
   width: fit-content;
+  color: rgb(226, 183, 20);
 }
 
 .buttons {
@@ -175,6 +158,38 @@ label[for="workspace-title"] {
 
 .buttons > * {
   width: 20%;
+}
+
+button {
+  font: inherit;
+  width: fit-content;
+  padding: 4px;
+  color: rgb(226, 183, 20);
+  border: none;
+  background: none;
+
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: rgb(202, 71, 84);
+  border-radius: 10px;
+}
+
+#add-btn,
+#close-btn {
+  color: rgb(226, 183, 20);
+  border-bottom: 2px dashed rgb(226, 183, 20);
+}
+
+button:active {
+  position: relative;
+  top: 3px;
+}
+
+#add-workspace {
+  color: rgb(226, 183, 20);
+  border-bottom: 2px dashed rgb(226, 183, 20);
 }
 
 .error-message {
@@ -189,7 +204,6 @@ label[for="workspace-title"] {
   color: rgb(226, 183, 20);
   text-align: center;
   padding: 8px;
-  background-color: rgb(202, 71, 84);
   border: none;
 
   cursor: pointer;
@@ -210,10 +224,9 @@ label[for="workspace-title"] {
 }
 
 #add-todo {
-  background-color: rgb(198, 210, 209);
   color: red;
-  width: 100px;
-  height: 40px;
+  width: 40px;
+  height: 30px;
 }
 
 .todo-item {
