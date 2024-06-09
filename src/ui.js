@@ -47,7 +47,7 @@ function addWorkspaceDom() {
   }
 }
 
-function displayWorkspaces() {
+export function displayWorkspaces() {
   // clear before populating dom again
   removeWorkspacesDom();
 
@@ -74,19 +74,24 @@ function displayWorkspaces() {
 
 function enableHighlightWorkspace() {
   const workspaceItems = document.querySelectorAll(".workspace-item");
+
   workspaceItems.forEach((workspace) => {
     workspace.addEventListener("click", () => {
-      let temp = Array.from(workspaceItems);
-      if (
-        temp.some((elem) => elem.classList.contains("highlighted-workspace"))
-      ) {
-        const previous = temp.find((elem) =>
+      // convert to array to use methods: some, find
+      let workspacesArray = Array.from(workspaceItems);
+      let isHighlighted = workspacesArray.some((elem) =>
+        elem.classList.contains("highlighted-workspace")
+      );
+
+      if (isHighlighted) {
+        const previous = workspacesArray.find((elem) =>
           elem.classList.contains("highlighted-workspace")
         );
+
         previous.classList.toggle("highlighted-workspace");
       }
-      workspace.classList.toggle("highlighted-workspace");
 
+      workspace.classList.toggle("highlighted-workspace");
       displayWorkspaceTodo(workspaces[workspace.id]);
     });
   });
@@ -110,5 +115,3 @@ function displayWorkspaceTodo(workspace) {
 function removeWorkspaceTodo() {
   todoContainer.replaceChildren();
 }
-
-displayWorkspaces();
