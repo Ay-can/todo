@@ -152,9 +152,12 @@ function enableHighlightWorkspace() {
       displayWorkspaceTodo(getWorkspace(workspace.dataset.index));
     });
   });
+
+  //highlight first item
+  workspaceItems[0].classList.add("highlighted-workspace");
 }
 
-function displayWorkspaceTodo(workspace) {
+export function displayWorkspaceTodo(workspace) {
   // remove previous
   removeWorkspaceTodo();
 

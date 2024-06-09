@@ -2,7 +2,7 @@ import style from "./style.css";
 
 import { createTodoItem } from "./todo.js";
 import "./ui.js";
-import { displayWorkspaces } from "./ui.js";
+import { displayWorkspaces, displayWorkspaceTodo } from "./ui.js";
 import {
   addTodoToWorkspace,
   addWorkspace,
@@ -39,3 +39,4 @@ addTodoToWorkspace(
 );
 
 displayWorkspaces();
+displayWorkspaceTodo(inbox);
