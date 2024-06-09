@@ -25,6 +25,7 @@ const todoDialog = document.querySelector("#todo-dialog");
 const addTodoDialogBtn = document.querySelector("#add-todo-dialog");
 const addTodoBtn = document.querySelector("#add-todo");
 const closeTodoBtn = document.querySelector("#close-todo");
+const todoForm = document.querySelector("#todo-form");
 
 openWorkspaceDialogBtn.addEventListener("click", () => {
   workspaceDialog.showModal();
@@ -53,7 +54,7 @@ function getHighlightedWorkspace() {
   return highlightedWorkspace;
 }
 
-addTodoBtn.addEventListener("click", () => {
+function addTodoToDom() {
   const title = document.querySelector("#todo-title");
   const selectedWorkspace = getWorkspace(
     getHighlightedWorkspace().dataset.index
@@ -61,6 +62,10 @@ addTodoBtn.addEventListener("click", () => {
   addTodoToWorkspace(selectedWorkspace, createTodo(title.value));
   title.value = "";
   displayWorkspaceTodo(selectedWorkspace);
+}
+
+addTodoBtn.addEventListener("click", () => {
+  addTodoToDom();
   todoDialog.close();
 });
 
@@ -72,6 +77,14 @@ workspaceForm.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
     addWorkspaceDom();
+  }
+});
+
+todoForm.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    addTodoToDom();
+    todoDialog.close();
   }
 });
 
