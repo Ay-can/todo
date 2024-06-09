@@ -33,4 +33,9 @@ addTodoToWorkspace(
   createTodo("Make yourself invisible", "be careful of envy")
 );
 
+addTodoToWorkspace(
+  school,
+  createTodo("Make yourself invisible", "be careful of envy")
+);
+
 displayWorkspaces();

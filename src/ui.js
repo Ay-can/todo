@@ -12,20 +12,24 @@ import {
 } from "./workspace";
 
 const workspaceDialog = document.querySelector("#workspace-dialog");
-const openDialogBtn = document.querySelector(".sidebar-workspaces > button");
-const closeDialogBtn = document.querySelector("#close-btn");
+const openWorkspaceDialogBtn = document.querySelector(
+  ".sidebar-workspaces > button"
+);
+const closeWorkspaceDialogBtn = document.querySelector("#close-btn");
 const addWorkspaceBtn = document.querySelector("#add-btn");
 const workspaceForm = document.querySelector("#workspace-form");
 const workspacesContainerDom = document.querySelector(".workspace-container");
 
 const todoDialog = document.querySelector("#todo-dialog");
+const addTodoDialogBtn = document.querySelector("#add-todo-dialog");
 const addTodoBtn = document.querySelector("#add-todo");
+const closeTodoBtn = document.querySelector("#close-todo");
 
-openDialogBtn.addEventListener("click", () => {
+openWorkspaceDialogBtn.addEventListener("click", () => {
   workspaceDialog.showModal();
 });
 
-closeDialogBtn.addEventListener("click", () => {
+closeWorkspaceDialogBtn.addEventListener("click", () => {
   workspaceDialog.close();
 });
 
@@ -33,18 +37,34 @@ addWorkspaceBtn.addEventListener("click", () => {
   addWorkspaceDom();
 });
 
-addTodoBtn.addEventListener("click", () => {
+addTodoDialogBtn.addEventListener("click", () => {
+  todoDialog.showModal();
+});
+
+function getHighlightedWorkspace() {
   const workspaceItems = document.querySelectorAll(".workspace-item");
   const workspacesArray = Array.from(workspaceItems);
 
-  const getHighlightedWorkspace = workspacesArray.find((elem) =>
+  const highlightedWorkspace = workspacesArray.find((elem) =>
     elem.classList.contains("highlighted-workspace")
   );
 
-  // get workspace object from workspace div index
-  const currentWorkspace = getWorkspace(getHighlightedWorkspace.dataset.index);
+  return highlightedWorkspace;
+}
 
-  addTodoToWorkspace(currentWorkspace, createTodo("hello"));
+addTodoBtn.addEventListener("click", () => {
+  const title = document.querySelector("#todo-title");
+  const selectedWorkspace = getWorkspace(
+    getHighlightedWorkspace().dataset.index
+  );
+  addTodoToWorkspace(selectedWorkspace, createTodo(title.value));
+  title.value = "";
+  displayWorkspaceTodo(selectedWorkspace);
+  todoDialog.close();
+});
+
+closeTodoBtn.addEventListener("click", () => {
+  todoDialog.close();
 });
 
 workspaceForm.addEventListener("keydown", (e) => {
