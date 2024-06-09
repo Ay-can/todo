@@ -20,6 +20,7 @@ const addWorkspaceBtn = document.querySelector("#add-btn");
 const workspaceForm = document.querySelector("#workspace-form");
 const workspacesContainerDom = document.querySelector(".workspace-container");
 
+const todoContainer = document.querySelector(".todo-items");
 const todoDialog = document.querySelector("#todo-dialog");
 const addTodoDialogBtn = document.querySelector("#add-todo-dialog");
 const addTodoBtn = document.querySelector("#add-todo");
@@ -140,17 +141,26 @@ function enableHighlightWorkspace() {
   });
 }
 
-const todoContainer = document.querySelector(".todo-items");
 function displayWorkspaceTodo(workspace) {
   // remove previous
   removeWorkspaceTodo();
 
-  workspace.todoItems.forEach((todo) => {
+  workspace.todoItems.forEach((todo, index) => {
     const todoDiv = document.createElement("div");
+    const deleteBtn = document.createElement("button");
 
     todoDiv.classList.add("todo-item");
     todoDiv.innerText = todo.title;
 
+    deleteBtn.classList.add("delete-button");
+    deleteBtn.innerText = "Delete";
+
+    deleteBtn.addEventListener("click", () => {
+      workspace.todoItems.splice(index, 1);
+      displayWorkspaceTodo(workspace);
+    });
+
+    todoDiv.appendChild(deleteBtn);
     todoContainer.appendChild(todoDiv);
   });
 }

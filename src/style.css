@@ -182,7 +182,8 @@ label[for="workspace-title"] {
   align-self: center;
 }
 
-.delete-workspace-item {
+.delete-workspace-item,
+.delete-button {
   display: inline-block;
   font-size: 0.9rem;
   color: rgb(226, 183, 20);
@@ -213,4 +214,9 @@ label[for="workspace-title"] {
   color: red;
   width: 100px;
   height: 40px;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
 }
