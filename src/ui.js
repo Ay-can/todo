@@ -11,20 +11,22 @@ import {
   removeWorkspace,
 } from "./workspace";
 
-const dialog = document.querySelector("dialog");
+const workspaceDialog = document.querySelector("#workspace-dialog");
 const openDialogBtn = document.querySelector(".sidebar-workspaces > button");
 const closeDialogBtn = document.querySelector("#close-btn");
 const addWorkspaceBtn = document.querySelector("#add-btn");
-const workspaceForm = document.querySelector("form");
+const workspaceForm = document.querySelector("#workspace-form");
 const workspacesContainerDom = document.querySelector(".workspace-container");
+
+const todoDialog = document.querySelector("#todo-dialog");
 const addTodoBtn = document.querySelector("#add-todo");
 
 openDialogBtn.addEventListener("click", () => {
-  dialog.showModal();
+  workspaceDialog.showModal();
 });
 
 closeDialogBtn.addEventListener("click", () => {
-  dialog.close();
+  workspaceDialog.close();
 });
 
 addWorkspaceBtn.addEventListener("click", () => {
@@ -60,7 +62,7 @@ function addWorkspaceDom() {
     addWorkspace(input.value);
     input.value = "";
     displayWorkspaces();
-    dialog.close();
+    workspaceDialog.close();
   } else {
     const errorMsg = document.querySelector(".error-message");
     errorMsg.style.color = "red";

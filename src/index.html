@@ -8,8 +8,8 @@
   <body>
     <div class="sidebar-workspaces">
       <button type="button">Add Workspace</button>
-      <dialog>
-        <form action="">
+      <dialog id="workspace-dialog">
+        <form action="" id="workspace-form">
           <div class="workspace-field">
             <label for="workspace-title">New Workspace</label>
             <input type="text" id="workspace-title" placeholder="Work" />
@@ -29,6 +29,16 @@
         <h1>Todo</h1>
         <button id="add-todo">Add Todo</button>
       </div>
+
+      <dialog id="todo-dialog">
+        <form action="" id="todo-form">
+          <div class="todo-field">
+            <label for="todo-title">Title</label>
+            <input type="text" id="todo-title" />
+          </div>
+        </form>
+      </dialog>
+
       <div class="todo-items"></div>
     </div>
 
