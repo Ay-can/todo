@@ -2,7 +2,12 @@
   This module is for dom related functionality
 */
 
-import { addWorkspace, workspaces } from "./workspace";
+import {
+  addWorkspace,
+  getWorkspace,
+  getWorkspaces,
+  removeWorkspace,
+} from "./workspace";
 
 // draw all workspaces
 const dialog = document.querySelector("dialog");
@@ -51,19 +56,19 @@ export function displayWorkspaces() {
   // clear before populating dom again
   removeWorkspacesDom();
 
-  workspaces.forEach((workspace, index) => {
+  getWorkspaces().forEach((workspace, index) => {
     const workspaceItem = document.createElement("div");
     const deleteBtn = document.createElement("button");
 
     deleteBtn.addEventListener("click", () => {
-      workspaces.splice(index, 1);
+      removeWorkspace(index);
       displayWorkspaces();
     });
 
     workspaceItem.classList.add("workspace-item");
     deleteBtn.classList.add("delete-workspace-item");
     workspaceItem.innerText = workspace.title;
-    workspaceItem.id = index;
+    workspaceItem.dataset.index = index;
 
     workspaceItem.appendChild(deleteBtn);
     workspacesContainerDom.appendChild(workspaceItem);
@@ -92,7 +97,7 @@ function enableHighlightWorkspace() {
       }
 
       workspace.classList.toggle("highlighted-workspace");
-      displayWorkspaceTodo(workspaces[workspace.id]);
+      displayWorkspaceTodo(getWorkspace(workspace.dataset.index));
     });
   });
 }
