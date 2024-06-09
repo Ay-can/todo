@@ -15,7 +15,7 @@ body {
 }
 
 .sidebar-workspaces {
-  background-color: rgb(226, 183, 20, 0.7);
+  background-color: rgb(226, 183, 20);
   border: 3px dashed rgb(50, 52, 55);
   border-radius: 10px;
   padding: 16px;
@@ -59,6 +59,11 @@ button {
   border: none;
 
   cursor: pointer;
+}
+
+button:active {
+  position: relative;
+  top: 3px;
 }
 
 .content {
@@ -189,15 +194,23 @@ label[for="workspace-title"] {
   cursor: pointer;
 }
 
-.delete-workspace-item:active {
-  position: relative;
-  top: 3px;
-}
-
 .delete-workspace-item::after {
   content: "Delete";
 }
 
 .highlighted-workspace {
   background-color: rgb(202, 71, 84);
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#add-todo {
+  background-color: rgb(198, 210, 209);
+  color: red;
+  width: 100px;
+  height: 40px;
 }

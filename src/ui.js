@@ -2,20 +2,22 @@
   This module is for dom related functionality
 */
 
+import { createTodo } from "./todo";
 import {
+  addTodoToWorkspace,
   addWorkspace,
   getWorkspace,
   getWorkspaces,
   removeWorkspace,
 } from "./workspace";
 
-// draw all workspaces
 const dialog = document.querySelector("dialog");
 const openDialogBtn = document.querySelector(".sidebar-workspaces > button");
 const closeDialogBtn = document.querySelector("#close-btn");
 const addWorkspaceBtn = document.querySelector("#add-btn");
-const form = document.querySelector("form");
+const workspaceForm = document.querySelector("form");
 const workspacesContainerDom = document.querySelector(".workspace-container");
+const addTodoBtn = document.querySelector("#add-todo");
 
 openDialogBtn.addEventListener("click", () => {
   dialog.showModal();
@@ -29,7 +31,21 @@ addWorkspaceBtn.addEventListener("click", () => {
   addWorkspaceDom();
 });
 
-form.addEventListener("keydown", (e) => {
+addTodoBtn.addEventListener("click", () => {
+  const workspaceItems = document.querySelectorAll(".workspace-item");
+  const workspacesArray = Array.from(workspaceItems);
+
+  const getHighlightedWorkspace = workspacesArray.find((elem) =>
+    elem.classList.contains("highlighted-workspace")
+  );
+
+  // get workspace object from workspace div index
+  const currentWorkspace = getWorkspace(getHighlightedWorkspace.dataset.index);
+
+  addTodoToWorkspace(currentWorkspace, createTodo("hello"));
+});
+
+workspaceForm.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
     addWorkspaceDom();
