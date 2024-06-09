@@ -15,7 +15,7 @@ body {
 }
 
 .sidebar-workspaces {
-  background-color: rgb(226, 183, 20);
+  background-color: rgb(226, 183, 20, 0.7);
   border: 3px dashed rgb(50, 52, 55);
   border-radius: 10px;
   padding: 16px;
@@ -88,6 +88,10 @@ button {
 .todo-items > *:hover {
   cursor: pointer;
   background-color: rgb(202, 71, 84, 0.5);
+}
+
+.workspace-item:hover {
+  background-color: rgb(202, 71, 84);
 }
 
 .footer {

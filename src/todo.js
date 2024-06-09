@@ -1,5 +1,5 @@
 // create a todo item
 
-export const createTodoItem = (title, description) => {
+export const createTodo = (title, description) => {
   return { title, description };
 };
