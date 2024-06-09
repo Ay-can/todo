@@ -9,6 +9,7 @@ import {
   getWorkspace,
   getWorkspaces,
   removeWorkspace,
+  setTotalInbox,
 } from "./workspace";
 
 const workspaceDialog = document.querySelector("#workspace-dialog");
@@ -59,8 +60,13 @@ function addTodoToDom() {
   const selectedWorkspace = getWorkspace(
     getHighlightedWorkspace().dataset.index
   );
+  // add to highlighted workspace
   addTodoToWorkspace(selectedWorkspace, createTodo(title.value));
+  // also add a copy to the total inbox
+
   title.value = "";
+
+  removeWorkspaceTodo();
   displayWorkspaceTodo(selectedWorkspace);
 }
 
@@ -149,7 +155,14 @@ function enableHighlightWorkspace() {
       }
 
       workspace.classList.toggle("highlighted-workspace");
-      displayWorkspaceTodo(getWorkspace(workspace.dataset.index));
+
+      const currentWorkspace = getWorkspace(workspace.dataset.index);
+      removeWorkspaceTodo();
+      if (currentWorkspace.title === "Inbox") {
+        displayAllTodoItems();
+      } else {
+        displayWorkspaceTodo(getWorkspace(workspace.dataset.index));
+      }
     });
   });
 
@@ -159,7 +172,6 @@ function enableHighlightWorkspace() {
 
 export function displayWorkspaceTodo(workspace) {
   // remove previous
-  removeWorkspaceTodo();
 
   workspace.todoItems.forEach((todo, index) => {
     const todoDiv = document.createElement("div");
@@ -179,6 +191,10 @@ export function displayWorkspaceTodo(workspace) {
     todoDiv.appendChild(deleteBtn);
     todoContainer.appendChild(todoDiv);
   });
+}
+
+export function displayAllTodoItems() {
+  getWorkspaces().forEach((workspace) => displayWorkspaceTodo(workspace));
 }
 
 function removeWorkspaceTodo() {

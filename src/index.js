@@ -2,11 +2,16 @@ import style from "./style.css";
 
 import { createTodoItem } from "./todo.js";
 import "./ui.js";
-import { displayWorkspaces, displayWorkspaceTodo } from "./ui.js";
+import {
+  displayAllTodoItems,
+  displayWorkspaces,
+  displayWorkspaceTodo,
+} from "./ui.js";
 import {
   addTodoToWorkspace,
   addWorkspace,
   createWorkspace,
+  setTotalInbox,
 } from "./workspace.js";
 import { createTodo } from "./todo";
 
@@ -17,12 +22,6 @@ import { createTodo } from "./todo";
 let inbox = addWorkspace("Inbox");
 let work = addWorkspace("Work");
 let school = addWorkspace("School");
-
-addTodoToWorkspace(inbox, createTodo("Fix Depression", "something cringe"));
-addTodoToWorkspace(
-  inbox,
-  createTodo("Finish Javascript Course", "Something else")
-);
 
 addTodoToWorkspace(
   work,
@@ -39,4 +38,4 @@ addTodoToWorkspace(
 );
 
 displayWorkspaces();
-displayWorkspaceTodo(inbox);
+displayAllTodoItems();
