@@ -57,6 +57,13 @@ function getHighlightedWorkspace() {
 
 function addTodoToDom() {
   const title = document.querySelector("#todo-title");
+  const description = document.querySelector("#todo-description");
+  const dueDate = document.querySelector("#todo-due-date");
+
+  console.log(title);
+  console.log(description);
+  console.log(dueDate);
+
   const selectedWorkspace = getWorkspace(
     getHighlightedWorkspace().dataset.index
   );
@@ -156,6 +163,7 @@ function enableHighlightWorkspace() {
 
       workspace.classList.toggle("highlighted-workspace");
 
+      // move this logic somewhere else
       const currentWorkspace = getWorkspace(workspace.dataset.index);
       removeWorkspaceTodo();
       if (currentWorkspace.title === "Inbox") {
@@ -185,7 +193,19 @@ export function displayWorkspaceTodo(workspace) {
 
     deleteBtn.addEventListener("click", () => {
       workspace.todoItems.splice(index, 1);
-      displayWorkspaceTodo(workspace);
+      removeWorkspaceTodo();
+
+      // find a better way to do this
+      const workspaceItems = document.querySelectorAll(".workspace-item");
+      const workspacesArray = Array.from(workspaceItems);
+      let current = workspacesArray.find((elem) =>
+        elem.classList.contains("highlighted-workspace")
+      );
+      if (current.innerText === "Inbox") {
+        displayAllTodoItems();
+      } else {
+        displayWorkspaceTodo();
+      }
     });
 
     todoDiv.appendChild(deleteBtn);

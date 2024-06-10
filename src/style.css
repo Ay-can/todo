@@ -107,13 +107,22 @@ a {
   border-left: 2px solid rgb(202, 71, 84);
 }
 
-dialog {
-  width: 600px;
-  height: 160px;
+#workspace-dialog,
+#todo-dialog {
   padding: 32px;
   border-radius: 6px;
   border: 4px dashed rgb(226, 183, 20);
-  background: none;
+  background: rgb(50, 52, 55);
+}
+
+#workspace-dialog {
+  width: 600px;
+  height: 160px;
+}
+
+#todo-dialog {
+  width: 600px;
+  height: 250px;
 }
 
 form {
@@ -153,6 +162,7 @@ label {
   display: flex;
   gap: 16px;
   justify-content: center;
+  font-size: 1.1rem;
 }
 
 .buttons > * {
@@ -225,6 +235,15 @@ button:active {
 .todo-item {
   display: flex;
   justify-content: space-between;
+}
+
+label {
+  width: 40%;
+}
+
+#todo-form {
+  display: flex;
+  flex-direction: column;
 }
 
 .todo-field {
