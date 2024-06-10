@@ -2,17 +2,8 @@ import style from "./style.css";
 
 import { createTodoItem } from "./todo.js";
 import "./ui.js";
-import {
-  displayAllTodoItems,
-  displayWorkspaces,
-  displayWorkspaceTodo,
-} from "./ui.js";
-import {
-  addTodoToWorkspace,
-  addWorkspace,
-  createWorkspace,
-  setTotalInbox,
-} from "./workspace.js";
+import { displayAllTodoItems, displayWorkspaces } from "./ui.js";
+import { addTodoToWorkspace, addWorkspace } from "./workspace.js";
 import { createTodo } from "./todo";
 
 // temp just to get the flow going

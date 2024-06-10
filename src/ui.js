@@ -60,18 +60,25 @@ function addTodoToDom() {
   const description = document.querySelector("#todo-description");
   const dueDate = document.querySelector("#todo-due-date");
 
-  console.log(title);
-  console.log(description);
-  console.log(dueDate);
-
   const selectedWorkspace = getWorkspace(
     getHighlightedWorkspace().dataset.index
   );
-  // add to highlighted workspace
-  addTodoToWorkspace(selectedWorkspace, createTodo(title.value));
+
+  if (
+    title.value.trim() !== "" &&
+    description.trim() !== "" &&
+    dueDate.value !== ""
+  ) {
+    // add to highlighted workspace
+    addTodoToWorkspace(
+      selectedWorkspace,
+      createTodo(title.value, description.value, dueDate.value)
+    );
+  }
   // also add a copy to the total inbox
 
   title.value = "";
+  description.value = "";
 
   removeWorkspaceTodo();
   displayWorkspaceTodo(selectedWorkspace);
@@ -152,7 +159,6 @@ function enableHighlightWorkspace() {
 
   workspaceItems.forEach((workspace) => {
     workspace.addEventListener("click", (e) => {
-      console.log("also clicked");
       e.stopPropagation();
       // convert to array to use methods: some, find
       let workspacesArray = Array.from(workspaceItems);
@@ -172,7 +178,6 @@ function enableHighlightWorkspace() {
 
       // move this logic somewhere else
       const currentWorkspace = getWorkspace(workspace.dataset.index);
-      console.log(currentWorkspace);
       removeWorkspaceTodo();
       if (currentWorkspace.title === "Inbox") {
         displayAllTodoItems();
@@ -214,10 +219,26 @@ export function displayWorkspaceTodo(workspace) {
       }
     });
 
+    todoDiv.addEventListener("click", () => {
+      todoDiv.classList.toggle("highlighted-todo");
+
+      if (todoDiv.classList.contains("highlighted-todo")) {
+        const todoDescriptionP = document.createElement("p");
+        todoDescriptionP.innerText = todo.description;
+        todoDiv.insertBefore(todoDescriptionP, todoDiv.childNodes[1]);
+      } else {
+        todoDiv.replaceChildren();
+        todoDiv.innerText = todo.title;
+        todoDiv.appendChild(deleteBtn);
+      }
+    });
+
     todoDiv.appendChild(deleteBtn);
     todoContainer.appendChild(todoDiv);
   });
 }
+
+function highlightTodo() {}
 
 export function displayAllTodoItems() {
   getWorkspaces().forEach((workspace) => displayWorkspaceTodo(workspace));
