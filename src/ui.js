@@ -66,7 +66,7 @@ function addTodoToDom() {
 
   if (
     title.value.trim() !== "" &&
-    description.trim() !== "" &&
+    description.value.trim() !== "" &&
     dueDate.value !== ""
   ) {
     // add to highlighted workspace
@@ -193,10 +193,13 @@ export function displayWorkspaceTodo(workspace) {
 
   workspace.todoItems.forEach((todo, index) => {
     const todoDiv = document.createElement("div");
+    const todoDueDateP = document.createElement("p");
     const deleteBtn = document.createElement("button");
 
     todoDiv.classList.add("todo-item");
     todoDiv.innerText = todo.title;
+
+    todoDueDateP.innerText = todo.dueDate;
 
     deleteBtn.classList.add("delete-button");
     deleteBtn.innerText = "Delete";
@@ -229,10 +232,12 @@ export function displayWorkspaceTodo(workspace) {
       } else {
         todoDiv.replaceChildren();
         todoDiv.innerText = todo.title;
+        todoDiv.appendChild(todoDueDateP);
         todoDiv.appendChild(deleteBtn);
       }
     });
 
+    todoDiv.appendChild(todoDueDateP);
     todoDiv.appendChild(deleteBtn);
     todoContainer.appendChild(todoDiv);
   });
