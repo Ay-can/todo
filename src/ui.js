@@ -125,7 +125,8 @@ export function displayWorkspaces() {
     const workspaceItem = document.createElement("div");
     const deleteBtn = document.createElement("button");
 
-    deleteBtn.addEventListener("click", () => {
+    deleteBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
       removeWorkspace(index);
       displayWorkspaces();
     });
@@ -146,7 +147,9 @@ function enableHighlightWorkspace() {
   const workspaceItems = document.querySelectorAll(".workspace-item");
 
   workspaceItems.forEach((workspace) => {
-    workspace.addEventListener("click", () => {
+    workspace.addEventListener("click", (e) => {
+      console.log("also clicked");
+      e.stopPropagation();
       // convert to array to use methods: some, find
       let workspacesArray = Array.from(workspaceItems);
       let isHighlighted = workspacesArray.some((elem) =>
@@ -165,6 +168,7 @@ function enableHighlightWorkspace() {
 
       // move this logic somewhere else
       const currentWorkspace = getWorkspace(workspace.dataset.index);
+      console.log(currentWorkspace);
       removeWorkspaceTodo();
       if (currentWorkspace.title === "Inbox") {
         displayAllTodoItems();
@@ -175,7 +179,9 @@ function enableHighlightWorkspace() {
   });
 
   //highlight first item
-  workspaceItems[0].classList.add("highlighted-workspace");
+  if (workspaceItems.length > 0) {
+    workspaceItems[0].classList.add("highlighted-workspace");
+  }
 }
 
 export function displayWorkspaceTodo(workspace) {
@@ -196,6 +202,7 @@ export function displayWorkspaceTodo(workspace) {
       removeWorkspaceTodo();
 
       // find a better way to do this
+      // this should be done somewhere else
       const workspaceItems = document.querySelectorAll(".workspace-item");
       const workspacesArray = Array.from(workspaceItems);
       let current = workspacesArray.find((elem) =>
