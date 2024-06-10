@@ -6,10 +6,11 @@
 
 const workspaces = [];
 
-const createWorkspace = (title) => {
+const createWorkspace = (title, isRemovable) => {
   return {
     title,
     todoItems: [],
+    isRemovable,
   };
 };
 
@@ -31,8 +32,8 @@ export const removeTodoFromWorkspace = (workspace, todoTitle) => {
   workspace.todoItems.splice(todoItemIndex, 1);
 };
 
-export const addWorkspace = (title) => {
-  let workspace = createWorkspace(title);
+export const addWorkspace = (title, isRemovable) => {
+  let workspace = createWorkspace(title, isRemovable);
   workspaces.push(workspace);
   return workspace;
 };

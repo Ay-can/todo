@@ -128,6 +128,7 @@ export function displayWorkspaces() {
     deleteBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       removeWorkspace(index);
+      removeWorkspaceTodo();
       displayWorkspaces();
     });
 
@@ -136,7 +137,10 @@ export function displayWorkspaces() {
     workspaceItem.innerText = workspace.title;
     workspaceItem.dataset.index = index;
 
-    workspaceItem.appendChild(deleteBtn);
+    if (workspace.isRemovable) {
+      workspaceItem.appendChild(deleteBtn);
+    }
+
     workspacesContainerDom.appendChild(workspaceItem);
   });
 
@@ -177,11 +181,6 @@ function enableHighlightWorkspace() {
       }
     });
   });
-
-  //highlight first item
-  if (workspaceItems.length > 0) {
-    workspaceItems[0].classList.add("highlighted-workspace");
-  }
 }
 
 export function displayWorkspaceTodo(workspace) {

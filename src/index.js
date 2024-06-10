@@ -19,9 +19,9 @@ import { createTodo } from "./todo";
 // put in modules
 
 // Create some default values
-let inbox = addWorkspace("Inbox");
-let work = addWorkspace("Work");
-let school = addWorkspace("School");
+let inbox = addWorkspace("Inbox", false);
+let work = addWorkspace("Work", true);
+let school = addWorkspace("School", true);
 
 addTodoToWorkspace(
   work,
