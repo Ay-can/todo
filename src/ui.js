@@ -66,7 +66,8 @@ function addTodoToDom() {
     getHighlightedWorkspace().dataset.index
   );
 
-  if (title.value.trim() !== "" && description.value.trim() !== "") {
+  // temp change
+  if (todoForm.reportValidity()) {
     // if no date is given there is no deadline
 
     let parsedDate;
@@ -85,23 +86,24 @@ function addTodoToDom() {
         priority.options[priority.selectedIndex].value
       )
     );
+
+    title.value = "";
+    description.value = "";
+
+    removeWorkspaceTodo();
+    if (selectedWorkspace.title === "Inbox") {
+      displayAllTodoItems();
+    } else {
+      displayWorkspaceTodo(selectedWorkspace);
+    }
+    todoDialog.close();
   }
+
   // also add a copy to the total inbox
-
-  title.value = "";
-  description.value = "";
-
-  removeWorkspaceTodo();
-  if (selectedWorkspace.title === "Inbox") {
-    displayAllTodoItems();
-  } else {
-    displayWorkspaceTodo(selectedWorkspace);
-  }
 }
 
 addTodoBtn.addEventListener("click", () => {
   addTodoToDom();
-  todoDialog.close();
 });
 
 closeTodoBtn.addEventListener("click", () => {
