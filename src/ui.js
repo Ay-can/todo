@@ -59,6 +59,8 @@ function addTodoToDom() {
   const title = document.querySelector("#todo-title");
   const description = document.querySelector("#todo-description");
   const dueDate = document.querySelector("#todo-due-date");
+  //const priority = document.querySelector("select");
+  //console.log(priority.options[priority.selectedIndex].value);
 
   const selectedWorkspace = getWorkspace(
     getHighlightedWorkspace().dataset.index
@@ -252,12 +254,15 @@ export function displayWorkspaceTodo(workspace) {
   });
 }
 
-function highlightTodo() {}
-
 export function displayAllTodoItems() {
   getWorkspaces().forEach((workspace) => displayWorkspaceTodo(workspace));
 }
 
 function removeWorkspaceTodo() {
   todoContainer.replaceChildren();
+}
+
+export function highlightInbox() {
+  const workspaceItems = document.querySelectorAll(".workspace-item");
+  workspaceItems[0].classList.add("highlighted-workspace");
 }

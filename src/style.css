@@ -260,3 +260,11 @@ label {
   color: rgb(226, 183, 20);
   margin: 0;
 }
+
+.todo-dropdown {
+  gap: 3px;
+}
+
+.todo-dropdown > select {
+  flex: 1;
+}

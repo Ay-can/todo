@@ -2,7 +2,11 @@ import style from "./style.css";
 
 import { createTodoItem } from "./todo.js";
 import "./ui.js";
-import { displayAllTodoItems, displayWorkspaces } from "./ui.js";
+import {
+  displayAllTodoItems,
+  displayWorkspaces,
+  highlightInbox,
+} from "./ui.js";
 import { addTodoToWorkspace, addWorkspace } from "./workspace.js";
 import { createTodo } from "./todo";
 
@@ -30,3 +34,4 @@ addTodoToWorkspace(
 
 displayWorkspaces();
 displayAllTodoItems();
+highlightInbox();
