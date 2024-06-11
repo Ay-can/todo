@@ -207,6 +207,8 @@ export function displayWorkspaceTodo(workspace) {
     // preview is what the user sees before clicking on it
     const todoPreviewDiv = document.createElement("div");
     const todoDiv = document.createElement("div");
+    const todoInfo = document.createElement("div");
+
     const todoDueDateP = document.createElement("p");
     const deleteBtn = document.createElement("button");
 
@@ -257,8 +259,12 @@ export function displayWorkspaceTodo(workspace) {
       }
     });
 
-    todoPreviewDiv.appendChild(todoDueDateP);
-    todoPreviewDiv.appendChild(deleteBtn);
+    todoInfo.classList.add("todo-info");
+
+    todoInfo.append(todoDueDateP);
+    todoInfo.append(deleteBtn);
+
+    todoPreviewDiv.appendChild(todoInfo);
     todoDiv.appendChild(todoPreviewDiv);
 
     todoContainer.appendChild(todoDiv);

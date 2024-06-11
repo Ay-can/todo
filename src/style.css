@@ -270,13 +270,18 @@ label {
 }
 
 .low-priority {
-  border-right: 6px solid rgb(86, 202, 73);
+  border-right: 5px dashed rgb(86, 202, 73);
 }
 
 .medium-priority {
-  border-right: 6px solid rgb(226, 183, 20);
+  border-right: 5px dashed rgb(226, 183, 20);
 }
 
 .high-priority {
-  border-right: 6px solid rgb(202, 71, 84);
+  border-right: 5px dashed rgb(202, 71, 84);
+}
+
+.todo-info {
+  display: flex;
+  gap: 6px;
 }

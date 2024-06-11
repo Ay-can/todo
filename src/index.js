@@ -1,5 +1,6 @@
 import style from "./style.css";
 
+import { format } from "date-fns";
 import { createTodoItem } from "./todo.js";
 import "./ui.js";
 import {
@@ -20,16 +21,31 @@ let school = addWorkspace("School", true);
 
 addTodoToWorkspace(
   work,
-  createTodo("Fix bug at homepage", "I will get fired otherwise")
+  createTodo(
+    "Fix bug at homepage",
+    "I will get fired otherwise",
+    format("2030-04-12", "PPP"),
+    "low"
+  )
 );
 addTodoToWorkspace(
   work,
-  createTodo("Make yourself invisible", "be careful of envy")
+  createTodo(
+    "Make yourself invisible",
+    "be careful of envy",
+    format("2040-04-20", "PPP"),
+    "high"
+  )
 );
 
 addTodoToWorkspace(
   school,
-  createTodo("Make yourself invisible", "be careful of envy")
+  createTodo(
+    "Make yourself invisible",
+    "be careful of envy",
+    format("2050-05-23", "PPP"),
+    "medium"
+  )
 );
 
 displayWorkspaces();
