@@ -210,15 +210,28 @@ export function displayWorkspaceTodo(workspace) {
 
   workspace.todoItems.forEach((todo, index) => {
     // preview is what the user sees before clicking on it
+    const todoLeftDiv = document.createElement("div");
     const todoPreviewDiv = document.createElement("div");
     const todoDiv = document.createElement("div");
-    const todoInfo = document.createElement("div");
+    const todoRightDiv = document.createElement("div");
 
+    const titleP = document.createElement("p");
+    const statusCheckbox = document.createElement("input");
     const todoDueDateP = document.createElement("p");
     const deleteBtn = document.createElement("button");
 
+    todoLeftDiv.classList.add("todo-left");
+    todoLeftDiv.appendChild(statusCheckbox);
+    todoLeftDiv.appendChild(titleP);
+
+    statusCheckbox.type = "checkbox";
+
+    statusCheckbox.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+
     todoPreviewDiv.classList.add("todo-item");
-    todoPreviewDiv.innerText = todo.title;
+    titleP.innerText = todo.title;
 
     todoDueDateP.innerText = todo.dueDate;
     setClassBasedOnPriority(todoDiv, todo.priority);
@@ -264,12 +277,13 @@ export function displayWorkspaceTodo(workspace) {
       }
     });
 
-    todoInfo.classList.add("todo-info");
+    todoRightDiv.classList.add("todo-info");
 
-    todoInfo.append(todoDueDateP);
-    todoInfo.append(deleteBtn);
+    todoRightDiv.append(todoDueDateP);
+    todoRightDiv.append(deleteBtn);
 
-    todoPreviewDiv.appendChild(todoInfo);
+    todoPreviewDiv.appendChild(todoLeftDiv);
+    todoPreviewDiv.appendChild(todoRightDiv);
     todoDiv.appendChild(todoPreviewDiv);
 
     todoContainer.appendChild(todoDiv);

@@ -270,11 +270,11 @@ label {
 }
 
 .low-priority {
-  border-right: 5px dashed rgb(86, 202, 73);
+  border-right: 5px dashed rgb(226, 183, 20);
 }
 
 .medium-priority {
-  border-right: 5px dashed rgb(226, 183, 20);
+  border-right: 5px dashed rgb(86, 202, 73);
 }
 
 .high-priority {
@@ -284,4 +284,14 @@ label {
 .todo-info {
   display: flex;
   gap: 6px;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+}
+
+.todo-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
