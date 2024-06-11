@@ -2,7 +2,7 @@
   This module is for dom related functionality
 */
 
-import { parse, format } from "date-fns";
+import { parse, format, endOfDay, endOfToday } from "date-fns";
 import { createTodo } from "./todo";
 import {
   addTodoToWorkspace,
@@ -66,12 +66,15 @@ function addTodoToDom() {
     getHighlightedWorkspace().dataset.index
   );
 
-  if (
-    title.value.trim() !== "" &&
-    description.value.trim() !== "" &&
-    dueDate.value !== ""
-  ) {
-    let parsedDate = parse(dueDate.value, "yyyy-MM-dd", new Date());
+  if (title.value.trim() !== "" && description.value.trim() !== "") {
+    // if no date is given there is no deadline
+
+    let parsedDate;
+    if (dueDate.value === "") {
+      parsedDate = endOfToday();
+    } else {
+      parsedDate = parse(dueDate.value, "yyyy-MM-dd", new Date());
+    }
     // add to highlighted workspace
     addTodoToWorkspace(
       selectedWorkspace,
