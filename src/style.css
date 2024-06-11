@@ -269,14 +269,14 @@ label {
   flex: 1;
 }
 
-p.low-priority {
-  color: rgb(86, 202, 73);
+.low-priority {
+  border-right: 6px solid rgb(86, 202, 73);
 }
 
-p.medium-priority {
-  color: rgb(226, 183, 20);
+.medium-priority {
+  border-right: 6px solid rgb(226, 183, 20);
 }
 
-p.high-priority {
-  color: rgb(202, 71, 84);
+.high-priority {
+  border-right: 6px solid rgb(202, 71, 84);
 }

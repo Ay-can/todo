@@ -2,6 +2,7 @@
   This module is for dom related functionality
 */
 
+import { parse, format } from "date-fns";
 import { createTodo } from "./todo";
 import {
   addTodoToWorkspace,
@@ -70,13 +71,14 @@ function addTodoToDom() {
     description.value.trim() !== "" &&
     dueDate.value !== ""
   ) {
+    let parsedDate = parse(dueDate.value, "yyyy-MM-dd", new Date());
     // add to highlighted workspace
     addTodoToWorkspace(
       selectedWorkspace,
       createTodo(
         title.value,
         description.value,
-        dueDate.value,
+        format(parsedDate, "PPP"),
         priority.options[priority.selectedIndex].value
       )
     );
@@ -206,15 +208,13 @@ export function displayWorkspaceTodo(workspace) {
     const todoPreviewDiv = document.createElement("div");
     const todoDiv = document.createElement("div");
     const todoDueDateP = document.createElement("p");
-    const todoPriorityP = document.createElement("p");
     const deleteBtn = document.createElement("button");
 
     todoPreviewDiv.classList.add("todo-item");
     todoPreviewDiv.innerText = todo.title;
 
     todoDueDateP.innerText = todo.dueDate;
-    todoPriorityP.innerText = todo.priority;
-    setClassBasedOnPriority(todoPriorityP);
+    setClassBasedOnPriority(todoDiv, todo.priority);
 
     deleteBtn.classList.add("delete-button");
     deleteBtn.innerText = "Delete";
@@ -258,7 +258,6 @@ export function displayWorkspaceTodo(workspace) {
     });
 
     todoPreviewDiv.appendChild(todoDueDateP);
-    todoPreviewDiv.appendChild(todoPriorityP);
     todoPreviewDiv.appendChild(deleteBtn);
     todoDiv.appendChild(todoPreviewDiv);
 
@@ -266,19 +265,17 @@ export function displayWorkspaceTodo(workspace) {
   });
 }
 
-function setClassBasedOnPriority(priority) {
-  console.log(priority);
+function setClassBasedOnPriority(todoDiv, priority) {
   // give each priority a css class
-  switch (priority.innerText) {
+  switch (priority) {
     case "low":
-      priority.classList.add("low-priority");
-      console.log("called");
+      todoDiv.classList.add("low-priority");
       break;
     case "medium":
-      priority.classList.add("medium-priority");
+      todoDiv.classList.add("medium-priority");
       break;
     case "high":
-      priority.classList.add("high-priority");
+      todoDiv.classList.add("high-priority");
       break;
   }
 }
