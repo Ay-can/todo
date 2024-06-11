@@ -268,3 +268,15 @@ label {
 .todo-dropdown > select {
   flex: 1;
 }
+
+p.low-priority {
+  color: rgb(86, 202, 73);
+}
+
+p.medium-priority {
+  color: rgb(226, 183, 20);
+}
+
+p.high-priority {
+  color: rgb(202, 71, 84);
+}

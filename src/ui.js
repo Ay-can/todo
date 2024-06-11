@@ -59,8 +59,7 @@ function addTodoToDom() {
   const title = document.querySelector("#todo-title");
   const description = document.querySelector("#todo-description");
   const dueDate = document.querySelector("#todo-due-date");
-  //const priority = document.querySelector("select");
-  //console.log(priority.options[priority.selectedIndex].value);
+  const priority = document.querySelector("select");
 
   const selectedWorkspace = getWorkspace(
     getHighlightedWorkspace().dataset.index
@@ -74,7 +73,12 @@ function addTodoToDom() {
     // add to highlighted workspace
     addTodoToWorkspace(
       selectedWorkspace,
-      createTodo(title.value, description.value, dueDate.value)
+      createTodo(
+        title.value,
+        description.value,
+        dueDate.value,
+        priority.options[priority.selectedIndex].value
+      )
     );
   }
   // also add a copy to the total inbox
@@ -202,12 +206,15 @@ export function displayWorkspaceTodo(workspace) {
     const todoPreviewDiv = document.createElement("div");
     const todoDiv = document.createElement("div");
     const todoDueDateP = document.createElement("p");
+    const todoPriorityP = document.createElement("p");
     const deleteBtn = document.createElement("button");
 
     todoPreviewDiv.classList.add("todo-item");
     todoPreviewDiv.innerText = todo.title;
 
     todoDueDateP.innerText = todo.dueDate;
+    todoPriorityP.innerText = todo.priority;
+    setClassBasedOnPriority(todoPriorityP);
 
     deleteBtn.classList.add("delete-button");
     deleteBtn.innerText = "Delete";
@@ -251,11 +258,29 @@ export function displayWorkspaceTodo(workspace) {
     });
 
     todoPreviewDiv.appendChild(todoDueDateP);
+    todoPreviewDiv.appendChild(todoPriorityP);
     todoPreviewDiv.appendChild(deleteBtn);
     todoDiv.appendChild(todoPreviewDiv);
 
     todoContainer.appendChild(todoDiv);
   });
+}
+
+function setClassBasedOnPriority(priority) {
+  console.log(priority);
+  // give each priority a css class
+  switch (priority.innerText) {
+    case "low":
+      priority.classList.add("low-priority");
+      console.log("called");
+      break;
+    case "medium":
+      priority.classList.add("medium-priority");
+      break;
+    case "high":
+      priority.classList.add("high-priority");
+      break;
+  }
 }
 
 export function displayAllTodoItems() {
