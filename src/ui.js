@@ -192,12 +192,14 @@ export function displayWorkspaceTodo(workspace) {
   // remove previous
 
   workspace.todoItems.forEach((todo, index) => {
+    // preview is what the user sees before clicking on it
+    const todoPreviewDiv = document.createElement("div");
     const todoDiv = document.createElement("div");
     const todoDueDateP = document.createElement("p");
     const deleteBtn = document.createElement("button");
 
-    todoDiv.classList.add("todo-item");
-    todoDiv.innerText = todo.title;
+    todoPreviewDiv.classList.add("todo-item");
+    todoPreviewDiv.innerText = todo.title;
 
     todoDueDateP.innerText = todo.dueDate;
 
@@ -226,19 +228,26 @@ export function displayWorkspaceTodo(workspace) {
       todoDiv.classList.toggle("highlighted-todo");
 
       if (todoDiv.classList.contains("highlighted-todo")) {
+        const todoDetailsDiv = document.createElement("div");
         const todoDescriptionP = document.createElement("p");
-        todoDescriptionP.innerText = todo.description;
-        todoDiv.insertBefore(todoDescriptionP, todoDiv.childNodes[1]);
+
+        todoPreviewDiv.style.borderBottom = "2px dashed rgb(226, 183, 20)";
+        todoDescriptionP.innerText = `Description: ${todo.description}`;
+
+        todoDetailsDiv.appendChild(todoDescriptionP);
+
+        todoDiv.appendChild(todoDetailsDiv);
       } else {
         todoDiv.replaceChildren();
-        todoDiv.innerText = todo.title;
-        todoDiv.appendChild(todoDueDateP);
-        todoDiv.appendChild(deleteBtn);
+        todoDiv.appendChild(todoPreviewDiv);
+        todoPreviewDiv.style.borderBottom = "";
       }
     });
 
-    todoDiv.appendChild(todoDueDateP);
-    todoDiv.appendChild(deleteBtn);
+    todoPreviewDiv.appendChild(todoDueDateP);
+    todoPreviewDiv.appendChild(deleteBtn);
+    todoDiv.appendChild(todoPreviewDiv);
+
     todoContainer.appendChild(todoDiv);
   });
 }
