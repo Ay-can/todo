@@ -226,13 +226,19 @@ export function displayWorkspaceTodo(workspace) {
 
     statusCheckbox.type = "checkbox";
 
+    // change status on click
     statusCheckbox.addEventListener("click", (e) => {
       e.stopPropagation();
       todo.status = statusCheckbox.checked;
+      titleP.classList.toggle("todo-done");
+      todoDueDateP.classList.toggle("todo-done");
     });
 
+    // when reloading items check if checkbox was set
     if (todo.status) {
       statusCheckbox.checked = true;
+      titleP.classList.toggle("todo-done");
+      todoDueDateP.classList.toggle("todo-done");
     } else {
       statusCheckbox.checked = false;
     }

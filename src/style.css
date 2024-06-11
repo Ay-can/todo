@@ -296,3 +296,7 @@ input[type="checkbox"] {
   align-items: center;
   gap: 16px;
 }
+
+.todo-done {
+  text-decoration: line-through;
+}
