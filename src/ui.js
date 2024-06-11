@@ -228,7 +228,14 @@ export function displayWorkspaceTodo(workspace) {
 
     statusCheckbox.addEventListener("click", (e) => {
       e.stopPropagation();
+      todo.status = statusCheckbox.checked;
     });
+
+    if (todo.status) {
+      statusCheckbox.checked = true;
+    } else {
+      statusCheckbox.checked = false;
+    }
 
     todoPreviewDiv.classList.add("todo-item");
     titleP.innerText = todo.title;
