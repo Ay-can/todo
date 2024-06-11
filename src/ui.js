@@ -83,7 +83,11 @@ function addTodoToDom() {
   description.value = "";
 
   removeWorkspaceTodo();
-  displayWorkspaceTodo(selectedWorkspace);
+  if (selectedWorkspace.title === "Inbox") {
+    displayAllTodoItems();
+  } else {
+    displayWorkspaceTodo(selectedWorkspace);
+  }
 }
 
 addTodoBtn.addEventListener("click", () => {
