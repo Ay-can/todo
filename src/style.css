@@ -35,7 +35,6 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 32px;
-
   grid-row: span 2;
 }
 
@@ -66,7 +65,6 @@ body {
   justify-content: flex-start;
   flex-direction: column;
   padding: 16px;
-
   grid-row: 1;
   grid-column: 2;
 }
@@ -241,12 +239,7 @@ button:active {
   background-color: var(--highlight-clr-light);
 }
 
-.title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
+.title,
 .todo-item {
   display: flex;
   justify-content: space-between;
