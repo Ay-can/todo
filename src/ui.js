@@ -10,7 +10,6 @@ import {
   getWorkspace,
   getWorkspaces,
   removeWorkspace,
-  setWorkspaces,
 } from "./workspace";
 
 const workspaceDialog = document.querySelector("#workspace-dialog");
@@ -46,7 +45,7 @@ addTodoDialogBtn.addEventListener("click", () => {
 });
 
 addTodoBtn.addEventListener("click", () => {
-  addTodoToDom();
+  addTodoDom();
 });
 
 closeTodoBtn.addEventListener("click", () => {
@@ -63,7 +62,7 @@ workspaceForm.addEventListener("keydown", (e) => {
 todoForm.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
-    addTodoToDom();
+    addTodoDom();
     todoAddDialog.close();
   }
 });
@@ -79,42 +78,42 @@ function getHighlightedWorkspace() {
   return highlightedWorkspace;
 }
 
-function addTodoToDom() {
-  const title = document.querySelector("#todo-title");
-  const description = document.querySelector("#todo-description");
-  const dueDate = document.querySelector("#todo-due-date");
-  const priority = document.querySelector("select");
+function addTodoDom() {
+  const titleInput = document.querySelector("#todo-title");
+  const descriptionInput = document.querySelector("#todo-description");
+  const dueDateInput = document.querySelector("#todo-due-date");
+  const prioritySelect = document.querySelector("select");
 
+  // retrieve in memory workspace
   const selectedWorkspace = getWorkspace(
     getHighlightedWorkspace().dataset.index
   );
 
-  // temp change
   if (todoForm.reportValidity()) {
-    // if no date is given there is no deadline
-
+    // if no date is given today is used
     let parsedDate;
-    if (dueDate.value === "") {
+    if (dueDateInput.value === "") {
       parsedDate = endOfToday();
     } else {
-      parsedDate = parse(dueDate.value, "yyyy-MM-dd", new Date());
+      parsedDate = parse(dueDateInput.value, "yyyy-MM-dd", new Date());
     }
     // check if todo already exists in workspace
     // add to highlighted workspace
     addTodoToWorkspace(
       selectedWorkspace,
       createTodo(
-        title.value,
-        description.value,
+        titleInput.value,
+        descriptionInput.value,
         format(parsedDate, "PPP"),
-        priority.options[priority.selectedIndex].value
+        prioritySelect.options[prioritySelect.selectedIndex].value
       )
     );
 
-    title.value = "";
-    description.value = "";
+    // clear fields
+    titleInput.value = "";
+    descriptionInput.value = "";
 
-    removeWorkspaceTodo();
+    clearTodoDom();
     if (selectedWorkspace.title === "Inbox") {
       displayAllTodoItems();
     } else {
@@ -127,17 +126,14 @@ function addTodoToDom() {
 const removeWorkspacesDom = () => workspacesContainerDom.replaceChildren();
 
 function addWorkspaceDom() {
+  const form = document.querySelector("#workspace-form");
   const input = document.querySelector("input");
 
-  if (input.value.trim() !== "") {
+  if (form.reportValidity()) {
     addWorkspace(input.value, true);
     input.value = "";
     displayWorkspaces();
     workspaceDialog.close();
-  } else {
-    const errorMsg = document.querySelector(".error-message");
-    errorMsg.style.color = "red";
-    errorMsg.innerText = "Enter atleast 1 letter";
   }
 }
 
@@ -152,7 +148,7 @@ export function displayWorkspaces() {
     deleteBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       removeWorkspace(index);
-      removeWorkspaceTodo();
+      clearTodoDom();
       displayWorkspaces();
     });
 
@@ -194,7 +190,7 @@ function enableHighlightWorkspace() {
 
       // move this logic somewhere else
       const currentWorkspace = getWorkspace(workspace.dataset.index);
-      removeWorkspaceTodo();
+      clearTodoDom();
       if (currentWorkspace.title === "Inbox") {
         displayAllTodoItems();
       } else {
@@ -205,8 +201,6 @@ function enableHighlightWorkspace() {
 }
 
 export function displayWorkspaceTodo(workspace) {
-  // remove previous
-
   workspace.todoItems.forEach((todo, index) => {
     // preview is what the user sees before clicking on it
     const todoLeftDiv = document.createElement("div");
@@ -256,7 +250,7 @@ export function displayWorkspaceTodo(workspace) {
     deleteBtn.addEventListener("click", () => {
       workspace.todoItems.splice(index, 1);
       localStorage.setItem("workspaces", JSON.stringify(getWorkspaces()));
-      removeWorkspaceTodo();
+      clearTodoDom();
 
       // find a better way to do this
       // this should be done somewhere else
@@ -315,7 +309,7 @@ export function displayWorkspaceTodo(workspace) {
         todo.priority = todoPriority.options[todoPriority.selectedIndex].value;
         localStorage.setItem("workspaces", JSON.stringify(getWorkspaces()));
 
-        removeWorkspaceTodo();
+        clearTodoDom();
         if (getHighlightedWorkspace().innerText === "Inbox") {
           displayAllTodoItems();
         } else {
@@ -370,7 +364,7 @@ export function displayAllTodoItems() {
   getWorkspaces().forEach((workspace) => displayWorkspaceTodo(workspace));
 }
 
-function removeWorkspaceTodo() {
+function clearTodoDom() {
   todoContainer.replaceChildren();
 }
 

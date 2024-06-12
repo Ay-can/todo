@@ -12,9 +12,14 @@
         <form action="" id="workspace-form">
           <div class="workspace-field">
             <label for="workspace-title">New Workspace</label>
-            <input type="text" id="workspace-title" placeholder="Work" />
+            <input
+              type="text"
+              id="workspace-title"
+              placeholder="Work"
+              required
+              maxlength="15"
+            />
           </div>
-          <div class="error-message"></div>
 
           <div class="buttons">
             <button type="button" id="add-btn">Add</button>
