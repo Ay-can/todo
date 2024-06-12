@@ -30,7 +30,7 @@
         <button id="add-todo-dialog">Add Todo</button>
       </div>
 
-      <dialog id="todo-dialog">
+      <dialog id="todo-add-dialog">
         <form action="" id="todo-form">
           <div class="todo-field">
             <label for="todo-title">Title:</label>
@@ -63,7 +63,7 @@
 
           <div class="todo-field todo-dropdown">
             <label for="todo-priority">Priority:</label>
-            <select name="todo-priority">
+            <select name="todo-select-priority">
               <option value="low" selected>Low</option>
               <option value="medium">Medium</option>
               <option value="high">High</option>
@@ -74,6 +74,54 @@
           <div class="buttons">
             <button type="button" id="add-todo">Add</button>
             <button type="button" id="close-todo">Close</button>
+          </div>
+        </form>
+      </dialog>
+
+      <dialog id="todo-edit-dialog">
+        <form action="" id="todo-form">
+          <div class="todo-field">
+            <label for="todo-edit-title">Title:</label>
+            <input
+              type="text"
+              id="todo-edit-title"
+              placeholder="Finish doing the dishes"
+              required
+              maxlength="20"
+            />
+          </div>
+
+          <div class="todo-field">
+            <label for="todo-edit-description">Description:</label>
+            <input
+              type="text"
+              id="todo-edit-description"
+              placeholder="Do the dishes today before mom comes"
+            />
+          </div>
+
+          <div class="todo-field">
+            <label for="todo-edit-due-date">Due Date:</label>
+            <input
+              type="date"
+              id="todo-edit-due-date"
+              placeholder="Do the dishes today before mom comes"
+            />
+          </div>
+
+          <div class="todo-field todo-dropdown">
+            <label for="todo-edit-select-priority">Priority:</label>
+            <select id="todo-edit-select-priority">
+              <option value="low" selected>Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+
+          <div class="error-message"></div>
+          <div class="buttons">
+            <button type="button" id="edit-todo">Add</button>
+            <button type="button" id="close-edit-todo">Close</button>
           </div>
         </form>
       </dialog>

@@ -121,7 +121,8 @@ a {
 }
 
 #workspace-dialog,
-#todo-dialog {
+#todo-add-dialog,
+#todo-edit-dialog {
   padding: 32px;
   border-radius: 6px;
   border: 4px dashed var(--secondary-clr);
@@ -133,7 +134,8 @@ a {
   height: 160px;
 }
 
-#todo-dialog {
+#todo-add-dialog,
+#todo-edit-dialog {
   width: 600px;
   height: 250px;
 }
@@ -270,7 +272,7 @@ label {
 .todo-field > label {
   font-size: 1.1rem;
   font-weight: 700;
-  color: rgb(226, 183, 20);
+  color: var(--secondary-clr);
   margin: 0;
 }
 
@@ -283,15 +285,15 @@ label {
 }
 
 .low-priority {
-  border-right: 5px dashed rgb(226, 183, 20);
+  border-right: 5px dashed var(--low-priority-clr);
 }
 
 .medium-priority {
-  border-right: 5px dashed rgb(86, 202, 73);
+  border-right: 5px dashed var(--medium-priority-clr);
 }
 
 .high-priority {
-  border-right: 5px dashed rgb(202, 71, 84);
+  border-right: 5px dashed var(--high-priority-clr);
 }
 
 .todo-info {

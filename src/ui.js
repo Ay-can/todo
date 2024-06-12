@@ -23,7 +23,7 @@ const workspaceForm = document.querySelector("#workspace-form");
 const workspacesContainerDom = document.querySelector(".workspace-container");
 
 const todoContainer = document.querySelector(".todo-items");
-const todoDialog = document.querySelector("#todo-dialog");
+const todoAddDialog = document.querySelector("#todo-add-dialog");
 const addTodoDialogBtn = document.querySelector("#add-todo-dialog");
 const addTodoBtn = document.querySelector("#add-todo");
 const closeTodoBtn = document.querySelector("#close-todo");
@@ -42,7 +42,7 @@ addWorkspaceBtn.addEventListener("click", () => {
 });
 
 addTodoDialogBtn.addEventListener("click", () => {
-  todoDialog.showModal();
+  todoAddDialog.showModal();
 });
 
 function getHighlightedWorkspace() {
@@ -76,6 +76,7 @@ function addTodoToDom() {
     } else {
       parsedDate = parse(dueDate.value, "yyyy-MM-dd", new Date());
     }
+    // check if todo already exists in workspace
     // add to highlighted workspace
     addTodoToWorkspace(
       selectedWorkspace,
@@ -96,10 +97,8 @@ function addTodoToDom() {
     } else {
       displayWorkspaceTodo(selectedWorkspace);
     }
-    todoDialog.close();
+    todoAddDialog.close();
   }
-
-  // also add a copy to the total inbox
 }
 
 addTodoBtn.addEventListener("click", () => {
@@ -107,7 +106,7 @@ addTodoBtn.addEventListener("click", () => {
 });
 
 closeTodoBtn.addEventListener("click", () => {
-  todoDialog.close();
+  todoAddDialog.close();
 });
 
 workspaceForm.addEventListener("keydown", (e) => {
@@ -121,7 +120,7 @@ todoForm.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
     addTodoToDom();
-    todoDialog.close();
+    todoAddDialog.close();
   }
 });
 
@@ -219,6 +218,7 @@ export function displayWorkspaceTodo(workspace) {
     const statusCheckbox = document.createElement("input");
     const todoDueDateP = document.createElement("p");
     const deleteBtn = document.createElement("button");
+    const editBtn = document.createElement("button");
 
     todoLeftDiv.classList.add("todo-left");
     todoLeftDiv.appendChild(statusCheckbox);
@@ -290,9 +290,54 @@ export function displayWorkspaceTodo(workspace) {
       }
     });
 
+    editBtn.innerText = "Edit";
+    editBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      const todoEditModal = document.querySelector("#todo-edit-dialog");
+      const todoEditBtn = document.querySelector("#edit-todo");
+      const todoCloseEditBtn = document.querySelector("#close-edit-todo");
+      const todoTitleInput = document.querySelector("#todo-edit-title");
+      const todoDescriptionInput = document.querySelector(
+        "#todo-edit-description"
+      );
+      const todoDueDate = document.querySelector("#todo-edit-due-date");
+      const todoPriority = document.querySelector("#todo-edit-select-priority");
+
+      todoEditBtn.addEventListener("click", () => {
+        let parsedDate = parse(todoDueDate.value, "yyyy-MM-dd", new Date());
+
+        todo.title = todoTitleInput.value;
+        todo.description = todoDescriptionInput.value;
+        todo.dueDate = format(parsedDate, "PPP", new Date());
+        todo.priority = todoPriority.options[todoPriority.selectedIndex].value;
+
+        removeWorkspaceTodo();
+        if (getHighlightedWorkspace().innerText === "Inbox") {
+          displayAllTodoItems();
+        } else {
+          displayWorkspaceTodo(workspace);
+        }
+        todoEditModal.close();
+      });
+
+      todoCloseEditBtn.addEventListener("click", () => {
+        todoEditModal.close();
+      });
+
+      let parsedDate = parse(todo.dueDate, "PPP", new Date());
+      todoTitleInput.value = todo.title;
+      todoDescriptionInput.value = todo.description;
+      todoDueDate.value = format(parsedDate, "yyyy-MM-dd", new Date());
+      todoPriority.value = todo.priority;
+
+      todoEditModal.showModal();
+    });
+
     todoRightDiv.classList.add("todo-info");
 
     todoRightDiv.append(todoDueDateP);
+    todoRightDiv.append(editBtn);
     todoRightDiv.append(deleteBtn);
 
     todoPreviewDiv.appendChild(todoLeftDiv);
