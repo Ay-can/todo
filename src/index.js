@@ -1,7 +1,6 @@
 import style from "./style.css";
 
 import { format } from "date-fns";
-import { createTodoItem } from "./todo.js";
 import "./ui.js";
 import {
   displayAllTodoItems,
@@ -11,7 +10,6 @@ import {
 import {
   addTodoToWorkspace,
   addWorkspace,
-  getWorkspaces,
   setWorkspaces,
 } from "./workspace.js";
 import { createTodo } from "./todo";
@@ -37,8 +35,8 @@ if (localStorage.getItem("workspaces") === null) {
   addTodoToWorkspace(
     work,
     createTodo(
-      "Make yourself invisible",
-      "be careful of envy",
+      "Finish Odin Project",
+      "Just want a job",
       format("2040-04-20", "PPP"),
       "high"
     )
@@ -47,8 +45,8 @@ if (localStorage.getItem("workspaces") === null) {
   addTodoToWorkspace(
     school,
     createTodo(
-      "Make yourself invisible",
-      "be careful of envy",
+      "Get an internship",
+      "Do leetcode and stuff",
       format("2050-05-23", "PPP"),
       "medium"
     )
