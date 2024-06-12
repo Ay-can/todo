@@ -2,7 +2,7 @@
   This module is for dom related functionality
 */
 
-import { parse, format, endOfDay, endOfToday } from "date-fns";
+import { parse, format, endOfToday } from "date-fns";
 import { createTodo } from "./todo";
 import {
   addTodoToWorkspace,
@@ -10,7 +10,7 @@ import {
   getWorkspace,
   getWorkspaces,
   removeWorkspace,
-  setTotalInbox,
+  setWorkspaces,
 } from "./workspace";
 
 const workspaceDialog = document.querySelector("#workspace-dialog");
@@ -149,6 +149,7 @@ export function displayWorkspaces() {
     const deleteBtn = document.createElement("button");
 
     deleteBtn.addEventListener("click", (e) => {
+      console.log("yes");
       e.stopPropagation();
       removeWorkspace(index);
       removeWorkspaceTodo();
@@ -254,6 +255,7 @@ export function displayWorkspaceTodo(workspace) {
 
     deleteBtn.addEventListener("click", () => {
       workspace.todoItems.splice(index, 1);
+      localStorage.setItem("workspaces", JSON.stringify(getWorkspaces()));
       removeWorkspaceTodo();
 
       // find a better way to do this

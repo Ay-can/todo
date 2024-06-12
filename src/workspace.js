@@ -4,7 +4,7 @@
 // A workspace should contain a list of todo items
 // You can delete a workspace
 
-const workspaces = [];
+let workspaces = [];
 
 const createWorkspace = (title, isRemovable) => {
   return {
@@ -18,10 +18,16 @@ export const getWorkspaces = () => workspaces;
 
 export const getWorkspace = (index) => workspaces[index];
 
-export const removeWorkspace = (index) => workspaces.splice(index, 1);
+export const setWorkspaces = (newWorkspaces) => (workspaces = newWorkspaces);
+
+export const removeWorkspace = (index) => {
+  workspaces.splice(index, 1);
+  localStorage.setItem("workspaces", JSON.stringify(workspaces));
+};
 
 export const addTodoToWorkspace = (workspace, todo) => {
   workspace.todoItems.push(todo);
+  localStorage.setItem("workspaces", JSON.stringify(workspaces));
 };
 
 export const removeTodoFromWorkspace = (workspace, todoTitle) => {
@@ -35,5 +41,6 @@ export const removeTodoFromWorkspace = (workspace, todoTitle) => {
 export const addWorkspace = (title, isRemovable) => {
   let workspace = createWorkspace(title, isRemovable);
   workspaces.push(workspace);
+  localStorage.setItem("workspaces", JSON.stringify(workspaces));
   return workspace;
 };
