@@ -230,6 +230,7 @@ export function displayWorkspaceTodo(workspace) {
     statusCheckbox.addEventListener("click", (e) => {
       e.stopPropagation();
       todo.status = statusCheckbox.checked;
+      localStorage.setItem("workspaces", JSON.stringify(getWorkspaces()));
       titleP.classList.toggle("todo-done");
       todoDueDateP.classList.toggle("todo-done");
     });
