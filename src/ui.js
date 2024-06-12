@@ -45,6 +45,29 @@ addTodoDialogBtn.addEventListener("click", () => {
   todoAddDialog.showModal();
 });
 
+addTodoBtn.addEventListener("click", () => {
+  addTodoToDom();
+});
+
+closeTodoBtn.addEventListener("click", () => {
+  todoAddDialog.close();
+});
+
+workspaceForm.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    addWorkspaceDom();
+  }
+});
+
+todoForm.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    addTodoToDom();
+    todoAddDialog.close();
+  }
+});
+
 function getHighlightedWorkspace() {
   const workspaceItems = document.querySelectorAll(".workspace-item");
   const workspacesArray = Array.from(workspaceItems);
@@ -100,29 +123,6 @@ function addTodoToDom() {
     todoAddDialog.close();
   }
 }
-
-addTodoBtn.addEventListener("click", () => {
-  addTodoToDom();
-});
-
-closeTodoBtn.addEventListener("click", () => {
-  todoAddDialog.close();
-});
-
-workspaceForm.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    addWorkspaceDom();
-  }
-});
-
-todoForm.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    addTodoToDom();
-    todoAddDialog.close();
-  }
-});
 
 const removeWorkspacesDom = () => workspacesContainerDom.replaceChildren();
 

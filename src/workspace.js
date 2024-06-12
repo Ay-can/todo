@@ -1,10 +1,52 @@
-// each todolist of items belong to a workspace, the default one is called main
+/*
+  Worspace API used to modify the workspaces
+*/
 
-// A workspace should contain a title
-// A workspace should contain a list of todo items
-// You can delete a workspace
+import { createTodo } from "./todo";
+import { format } from "date-fns";
 
 let workspaces = [];
+
+// check if localstorage exists otherwise populate with defaults
+export const workspacesInit = () => {
+  if (localStorage.getItem("workspaces") === null) {
+    let inbox = addWorkspace("Inbox", false);
+    let school = addWorkspace("School", true);
+    let work = addWorkspace("Work", true);
+
+    addTodoToWorkspace(
+      work,
+      createTodo(
+        "Fix bug at homepage",
+        "I will get fired otherwise",
+        format("2030-04-12", "PPP"),
+        "low"
+      )
+    );
+    addTodoToWorkspace(
+      work,
+      createTodo(
+        "Finish Odin Project",
+        "Just want a job",
+        format("2040-04-20", "PPP"),
+        "high"
+      )
+    );
+
+    addTodoToWorkspace(
+      school,
+      createTodo(
+        "Get an internship",
+        "Do leetcode and stuff",
+        format("2050-05-23", "PPP"),
+        "medium"
+      )
+    );
+  } else {
+    // load saved workspaces
+    workspaces = JSON.parse(localStorage.getItem("workspaces"));
+  }
+};
 
 const createWorkspace = (title, isRemovable) => {
   return {
@@ -22,25 +64,23 @@ export const setWorkspaces = (newWorkspaces) => (workspaces = newWorkspaces);
 
 export const removeWorkspace = (index) => {
   workspaces.splice(index, 1);
-  localStorage.setItem("workspaces", JSON.stringify(workspaces));
+  updateLocalStorage();
 };
 
 export const addTodoToWorkspace = (workspace, todo) => {
   workspace.todoItems.push(todo);
-  localStorage.setItem("workspaces", JSON.stringify(workspaces));
-};
-
-export const removeTodoFromWorkspace = (workspace, todoTitle) => {
-  const todoItemIndex = workspace.todoItems.findIndex(
-    (elem) => elem.title === todoTitle
-  );
-  console.log(todoItemIndex);
-  workspace.todoItems.splice(todoItemIndex, 1);
+  updateLocalStorage();
 };
 
 export const addWorkspace = (title, isRemovable) => {
   let workspace = createWorkspace(title, isRemovable);
   workspaces.push(workspace);
-  localStorage.setItem("workspaces", JSON.stringify(workspaces));
+  updateLocalStorage();
   return workspace;
+};
+
+// update our localstorage with our in memory workspace
+// this is not an efficient/smart way of doing this, but for now it's okay
+const updateLocalStorage = () => {
+  localStorage.setItem("workspaces", JSON.stringify(workspaces));
 };
