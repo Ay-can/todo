@@ -28,44 +28,48 @@ const addTodoBtn = document.querySelector("#add-todo");
 const closeTodoBtn = document.querySelector("#close-todo");
 const todoForm = document.querySelector("#todo-form");
 
-openWorkspaceDialogBtn.addEventListener("click", () => {
-  workspaceDialog.showModal();
-});
+function addEventListeners() {
+  openWorkspaceDialogBtn.addEventListener("click", () => {
+    workspaceDialog.showModal();
+  });
 
-closeWorkspaceDialogBtn.addEventListener("click", () => {
-  workspaceDialog.close();
-});
+  closeWorkspaceDialogBtn.addEventListener("click", () => {
+    workspaceDialog.close();
+  });
 
-addWorkspaceBtn.addEventListener("click", () => {
-  addWorkspaceDom();
-});
-
-addTodoDialogBtn.addEventListener("click", () => {
-  todoAddDialog.showModal();
-});
-
-addTodoBtn.addEventListener("click", () => {
-  addTodoDom();
-});
-
-closeTodoBtn.addEventListener("click", () => {
-  todoAddDialog.close();
-});
-
-workspaceForm.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
+  addWorkspaceBtn.addEventListener("click", () => {
     addWorkspaceDom();
-  }
-});
+  });
 
-todoForm.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
+  addTodoDialogBtn.addEventListener("click", () => {
+    todoAddDialog.showModal();
+  });
+
+  addTodoBtn.addEventListener("click", () => {
     addTodoDom();
+  });
+
+  closeTodoBtn.addEventListener("click", () => {
     todoAddDialog.close();
-  }
-});
+  });
+
+  workspaceForm.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addWorkspaceDom();
+    }
+  });
+
+  todoForm.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addTodoDom();
+      todoAddDialog.close();
+    }
+  });
+}
+
+// utilty functions
 
 function getHighlightedWorkspace() {
   const workspaceItems = document.querySelectorAll(".workspace-item");
@@ -76,6 +80,22 @@ function getHighlightedWorkspace() {
   );
 
   return highlightedWorkspace;
+}
+
+const removeWorkspacesDom = () => workspacesContainerDom.replaceChildren();
+
+function clearTodoDom() {
+  todoContainer.replaceChildren();
+}
+
+function setClassBasedOnPriority(todoDiv, priority) {
+  const priorityClasses = {
+    low: "low-priority",
+    medium: "medium-priority",
+    high: "high-priority",
+  };
+
+  todoDiv.classList.add(priorityClasses[priority]);
 }
 
 function addTodoDom() {
@@ -122,8 +142,6 @@ function addTodoDom() {
     todoAddDialog.close();
   }
 }
-
-const removeWorkspacesDom = () => workspacesContainerDom.replaceChildren();
 
 function addWorkspaceDom() {
   const form = document.querySelector("#workspace-form");
@@ -345,30 +363,13 @@ export function displayWorkspaceTodo(workspace) {
   });
 }
 
-function setClassBasedOnPriority(todoDiv, priority) {
-  // give each priority a css class
-  switch (priority) {
-    case "low":
-      todoDiv.classList.add("low-priority");
-      break;
-    case "medium":
-      todoDiv.classList.add("medium-priority");
-      break;
-    case "high":
-      todoDiv.classList.add("high-priority");
-      break;
-  }
-}
-
 export function displayAllTodoItems() {
   getWorkspaces().forEach((workspace) => displayWorkspaceTodo(workspace));
-}
-
-function clearTodoDom() {
-  todoContainer.replaceChildren();
 }
 
 export function highlightInbox() {
   const workspaceItems = document.querySelectorAll(".workspace-item");
   workspaceItems[0].classList.add("highlighted-workspace");
 }
+
+addEventListeners();
