@@ -58,7 +58,8 @@ if (localStorage.getItem("workspaces") === null) {
   highlightInbox();
 } else {
   setWorkspaces(JSON.parse(localStorage.getItem("workspaces")));
+
+  displayWorkspaces();
+  displayAllTodoItems();
+  highlightInbox();
 }
-displayWorkspaces();
-displayAllTodoItems();
-highlightInbox();

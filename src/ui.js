@@ -128,8 +128,9 @@ const removeWorkspacesDom = () => workspacesContainerDom.replaceChildren();
 
 function addWorkspaceDom() {
   const input = document.querySelector("input");
+
   if (input.value.trim() !== "") {
-    addWorkspace(input.value);
+    addWorkspace(input.value, true);
     input.value = "";
     displayWorkspaces();
     workspaceDialog.close();
@@ -149,7 +150,6 @@ export function displayWorkspaces() {
     const deleteBtn = document.createElement("button");
 
     deleteBtn.addEventListener("click", (e) => {
-      console.log("yes");
       e.stopPropagation();
       removeWorkspace(index);
       removeWorkspaceTodo();
@@ -164,7 +164,6 @@ export function displayWorkspaces() {
     if (workspace.isRemovable) {
       workspaceItem.appendChild(deleteBtn);
     }
-
     workspacesContainerDom.appendChild(workspaceItem);
   });
 
@@ -313,6 +312,7 @@ export function displayWorkspaceTodo(workspace) {
         todo.description = todoDescriptionInput.value;
         todo.dueDate = format(parsedDate, "PPP", new Date());
         todo.priority = todoPriority.options[todoPriority.selectedIndex].value;
+        localStorage.setItem("workspaces", JSON.stringify(getWorkspaces()));
 
         removeWorkspaceTodo();
         if (getHighlightedWorkspace().innerText === "Inbox") {
