@@ -72,6 +72,11 @@ export const addTodoToWorkspace = (workspace, todo) => {
   updateLocalStorage();
 };
 
+export const removeTodoFromWorkspace = (workspace, index) => {
+  workspace.todoItems.splice(index, 1);
+  updateLocalStorage();
+};
+
 export const addWorkspace = (title, isRemovable) => {
   let workspace = createWorkspace(title, isRemovable);
   workspaces.push(workspace);
@@ -81,6 +86,6 @@ export const addWorkspace = (title, isRemovable) => {
 
 // update our localstorage with our in memory workspace
 // this is not an efficient/smart way of doing this, but for now it's okay
-const updateLocalStorage = () => {
+export const updateLocalStorage = () => {
   localStorage.setItem("workspaces", JSON.stringify(workspaces));
 };

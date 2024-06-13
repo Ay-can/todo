@@ -10,6 +10,8 @@ import {
   getWorkspace,
   getWorkspaces,
   removeWorkspace,
+  removeTodoFromWorkspace as removeTodoFromWorkspace,
+  updateLocalStorage,
 } from "./workspace";
 
 const workspaceDialog = document.querySelector("#workspace-dialog");
@@ -71,7 +73,6 @@ function addEventListeners() {
 }
 
 // utilty functions
-
 function getHighlightedWorkspace() {
   const workspaceItems = document.querySelectorAll(".workspace-item");
   const workspacesArray = Array.from(workspaceItems);
@@ -108,6 +109,11 @@ export function highlightInbox() {
   workspaceItems[0].classList.add("highlighted-workspace");
 }
 
+// if no date is geven use today
+function parseDate(date) {
+  return date === "" ? endOfToday() : parse(date, "yyyy-MM-dd", new Date());
+}
+
 function addTodoDom() {
   const titleInput = document.querySelector("#todo-title");
   const descriptionInput = document.querySelector("#todo-description");
@@ -120,15 +126,9 @@ function addTodoDom() {
   );
 
   if (todoForm.reportValidity()) {
-    // if no date is given today is used
-    let parsedDate;
-    if (dueDateInput.value === "") {
-      parsedDate = endOfToday();
-    } else {
-      parsedDate = parse(dueDateInput.value, "yyyy-MM-dd", new Date());
-    }
-    // check if todo already exists in workspace
-    // add to highlighted workspace
+    let parsedDate = parseDate(dueDateInput.value);
+
+    // add todo to highlighted workspace
     addTodoToWorkspace(
       selectedWorkspace,
       createTodo(
@@ -143,12 +143,7 @@ function addTodoDom() {
     titleInput.value = "";
     descriptionInput.value = "";
 
-    clearTodoDom();
-    if (selectedWorkspace.title === "Inbox") {
-      displayAllTodoItems();
-    } else {
-      displayWorkspaceTodo(selectedWorkspace);
-    }
+    displayHighlightedWorkspaceTodo(getHighlightedWorkspace());
     todoAddDialog.close();
   }
 }
@@ -208,25 +203,23 @@ function enableHighlightWorkspace() {
 
       // turn off previous highlighted item
       if (isHighlighted) {
-        const previous = workspacesArray.find((elem) =>
-          elem.classList.contains("highlighted-workspace")
-        );
-
+        const previous = getHighlightedWorkspace();
         previous.classList.toggle("highlighted-workspace");
       }
 
       // set new highlighted item
       workspace.classList.toggle("highlighted-workspace");
-      displayHighlightedTodoItems(workspace);
+      displayHighlightedWorkspaceTodo(workspace);
     });
   });
 }
 
-// Displays items based on highlighted item
-function displayHighlightedTodoItems(workspaceDiv) {
+// Displays items based on highlighted workspace
+function displayHighlightedWorkspaceTodo(workspaceDiv) {
+  // get in memory workspace
   const currentWorkspace = getWorkspace(workspaceDiv.dataset.index);
-
   clearTodoDom();
+
   if (currentWorkspace.title === "Inbox") {
     displayAllTodoItems();
   } else {
@@ -285,25 +278,23 @@ export function displayWorkspaceTodo(workspace) {
     deleteBtn.innerText = "Delete";
 
     deleteBtn.addEventListener("click", () => {
-      workspace.todoItems.splice(index, 1);
-      localStorage.setItem("workspaces", JSON.stringify(getWorkspaces()));
+      removeTodoFromWorkspace(workspace, index);
       clearTodoDom();
 
       const workspaceItems = document.querySelectorAll(".workspace-item");
       const workspacesArray = Array.from(workspaceItems);
-      let current = workspacesArray.find((elem) =>
+      let highlightedWorkspace = workspacesArray.find((elem) =>
         elem.classList.contains("highlighted-workspace")
       );
-      if (current.innerText === "Inbox") {
-        displayAllTodoItems();
-      } else {
-        displayWorkspaceTodo();
-      }
+
+      displayHighlightedWorkspaceTodo(highlightedWorkspace);
     });
 
     todoDiv.addEventListener("click", () => {
       todoDiv.classList.toggle("highlighted-todo");
 
+      // if todo is highlighted append a description to the todo div
+      // this combined with the previewdiv form the while tododiv
       if (todoDiv.classList.contains("highlighted-todo")) {
         const todoDetailsDiv = document.createElement("div");
         const todoDescriptionP = document.createElement("p");
@@ -312,7 +303,6 @@ export function displayWorkspaceTodo(workspace) {
         todoDescriptionP.innerText = `Description: ${todo.description}`;
 
         todoDetailsDiv.appendChild(todoDescriptionP);
-
         todoDiv.appendChild(todoDetailsDiv);
       } else {
         todoDiv.replaceChildren();
@@ -335,6 +325,7 @@ export function displayWorkspaceTodo(workspace) {
       const todoDueDate = document.querySelector("#todo-edit-due-date");
       const todoPriority = document.querySelector("#todo-edit-select-priority");
 
+      // if use clicks on update, populate todo and save it in localstorage
       todoEditBtn.addEventListener("click", () => {
         let parsedDate = parse(todoDueDate.value, "yyyy-MM-dd", new Date());
 
@@ -342,10 +333,9 @@ export function displayWorkspaceTodo(workspace) {
         todo.description = todoDescriptionInput.value;
         todo.dueDate = format(parsedDate, "PPP", new Date());
         todo.priority = todoPriority.options[todoPriority.selectedIndex].value;
-        localStorage.setItem("workspaces", JSON.stringify(getWorkspaces()));
 
-        displayHighlightedTodoItems(getHighlightedWorkspace());
-
+        updateLocalStorage();
+        displayHighlightedWorkspaceTodo(getHighlightedWorkspace());
         todoEditModal.close();
       });
 
@@ -353,6 +343,7 @@ export function displayWorkspaceTodo(workspace) {
         todoEditModal.close();
       });
 
+      // if use click on edit btn retrieve previous values
       let parsedDate = parse(todo.dueDate, "PPP", new Date());
       todoTitleInput.value = todo.title;
       todoDescriptionInput.value = todo.description;
