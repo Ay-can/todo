@@ -53,6 +53,7 @@ function addEventListeners() {
     todoAddDialog.close();
   });
 
+  // Allow user to submit using the enter button without refreshing the page
   workspaceForm.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -96,6 +97,15 @@ function setClassBasedOnPriority(todoDiv, priority) {
   };
 
   todoDiv.classList.add(priorityClasses[priority]);
+}
+
+export function displayAllTodoItems() {
+  getWorkspaces().forEach((workspace) => displayWorkspaceTodo(workspace));
+}
+
+export function highlightInbox() {
+  const workspaceItems = document.querySelectorAll(".workspace-item");
+  workspaceItems[0].classList.add("highlighted-workspace");
 }
 
 function addTodoDom() {
@@ -196,6 +206,7 @@ function enableHighlightWorkspace() {
         elem.classList.contains("highlighted-workspace")
       );
 
+      // turn off previous highlighted item
       if (isHighlighted) {
         const previous = workspacesArray.find((elem) =>
           elem.classList.contains("highlighted-workspace")
@@ -204,27 +215,35 @@ function enableHighlightWorkspace() {
         previous.classList.toggle("highlighted-workspace");
       }
 
+      // set new highlighted item
       workspace.classList.toggle("highlighted-workspace");
-
-      // move this logic somewhere else
-      const currentWorkspace = getWorkspace(workspace.dataset.index);
-      clearTodoDom();
-      if (currentWorkspace.title === "Inbox") {
-        displayAllTodoItems();
-      } else {
-        displayWorkspaceTodo(getWorkspace(workspace.dataset.index));
-      }
+      displayHighlightedTodoItems(workspace);
     });
   });
 }
 
+// Displays items based on highlighted item
+function displayHighlightedTodoItems(workspaceDiv) {
+  const currentWorkspace = getWorkspace(workspaceDiv.dataset.index);
+
+  clearTodoDom();
+  if (currentWorkspace.title === "Inbox") {
+    displayAllTodoItems();
+  } else {
+    displayWorkspaceTodo(getWorkspace(workspaceDiv.dataset.index));
+  }
+}
+
 export function displayWorkspaceTodo(workspace) {
   workspace.todoItems.forEach((todo, index) => {
-    // preview is what the user sees before clicking on it
-    const todoLeftDiv = document.createElement("div");
+    // preview is what the user sees before highlighting a todo
     const todoPreviewDiv = document.createElement("div");
-    const todoDiv = document.createElement("div");
+    // the left side contains a checkbox and title
+    const todoLeftDiv = document.createElement("div");
+    // the right side contains date, edit and delete button
     const todoRightDiv = document.createElement("div");
+    // the todo div contains the todo preview and todo description when clicked below
+    const todoDiv = document.createElement("div");
 
     const titleP = document.createElement("p");
     const statusCheckbox = document.createElement("input");
@@ -232,10 +251,10 @@ export function displayWorkspaceTodo(workspace) {
     const deleteBtn = document.createElement("button");
     const editBtn = document.createElement("button");
 
+    // add title and checkbox to left side of preview
     todoLeftDiv.classList.add("todo-left");
     todoLeftDiv.appendChild(statusCheckbox);
     todoLeftDiv.appendChild(titleP);
-
     statusCheckbox.type = "checkbox";
 
     // change status on click
@@ -270,8 +289,6 @@ export function displayWorkspaceTodo(workspace) {
       localStorage.setItem("workspaces", JSON.stringify(getWorkspaces()));
       clearTodoDom();
 
-      // find a better way to do this
-      // this should be done somewhere else
       const workspaceItems = document.querySelectorAll(".workspace-item");
       const workspacesArray = Array.from(workspaceItems);
       let current = workspacesArray.find((elem) =>
@@ -327,12 +344,8 @@ export function displayWorkspaceTodo(workspace) {
         todo.priority = todoPriority.options[todoPriority.selectedIndex].value;
         localStorage.setItem("workspaces", JSON.stringify(getWorkspaces()));
 
-        clearTodoDom();
-        if (getHighlightedWorkspace().innerText === "Inbox") {
-          displayAllTodoItems();
-        } else {
-          displayWorkspaceTodo(workspace);
-        }
+        displayHighlightedTodoItems(getHighlightedWorkspace());
+
         todoEditModal.close();
       });
 
@@ -361,15 +374,6 @@ export function displayWorkspaceTodo(workspace) {
 
     todoContainer.appendChild(todoDiv);
   });
-}
-
-export function displayAllTodoItems() {
-  getWorkspaces().forEach((workspace) => displayWorkspaceTodo(workspace));
-}
-
-export function highlightInbox() {
-  const workspaceItems = document.querySelectorAll(".workspace-item");
-  workspaceItems[0].classList.add("highlighted-workspace");
 }
 
 addEventListeners();
