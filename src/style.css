@@ -119,7 +119,7 @@ a {
 }
 
 #workspace-dialog,
-#todo-add-dialog,
+#todo-dialog,
 #todo-edit-dialog {
   padding: 32px;
   border-radius: 6px;
@@ -132,7 +132,7 @@ a {
   height: 160px;
 }
 
-#todo-add-dialog,
+#todo-dialog,
 #todo-edit-dialog {
   width: 600px;
   height: 250px;
