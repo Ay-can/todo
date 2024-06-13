@@ -24,35 +24,26 @@ const workspaceForm = document.querySelector("#workspace-form");
 const workspacesContainerDom = document.querySelector(".workspace-container");
 
 const todoContainer = document.querySelector(".todo-items");
-const todoAddDialog = document.querySelector("#todo-add-dialog");
-const addTodoDialogBtn = document.querySelector("#add-todo-dialog");
+const todoDialog = document.querySelector("#todo-dialog");
+// this opens the dialog
+const openTodoDialogBtn = document.querySelector("#add-todo-dialog-btn");
+// this button adds the todo
 const addTodoBtn = document.querySelector("#add-todo");
-const closeTodoBtn = document.querySelector("#close-todo");
+const closeTodoDialogBtn = document.querySelector("#close-todo");
 const todoForm = document.querySelector("#todo-form");
 
 function addEventListeners() {
-  openWorkspaceDialogBtn.addEventListener("click", () => {
-    workspaceDialog.showModal();
-  });
-
-  closeWorkspaceDialogBtn.addEventListener("click", () => {
-    workspaceDialog.close();
-  });
-
-  addWorkspaceBtn.addEventListener("click", () => {
-    addWorkspaceDom();
-  });
-
-  addTodoDialogBtn.addEventListener("click", () => {
-    todoAddDialog.showModal();
-  });
+  // setup dialog for workspace
+  setupDialog(workspaceDialog, openWorkspaceDialogBtn, closeWorkspaceDialogBtn);
+  // setup dialog for todo
+  setupDialog(todoDialog, openTodoDialogBtn, closeTodoDialogBtn);
 
   addTodoBtn.addEventListener("click", () => {
     addTodoDom();
   });
 
-  closeTodoBtn.addEventListener("click", () => {
-    todoAddDialog.close();
+  addWorkspaceBtn.addEventListener("click", () => {
+    addWorkspaceDom();
   });
 
   // Allow user to submit using the enter button without refreshing the page
@@ -67,9 +58,15 @@ function addEventListeners() {
     if (e.key === "Enter") {
       e.preventDefault();
       addTodoDom();
-      todoAddDialog.close();
+      openTodoDialogBtn.close();
     }
   });
+}
+
+// utilty functions
+function setupDialog(dialog, openBtn, closeBtn) {
+  openBtn.addEventListener("click", () => dialog.showModal());
+  closeBtn.addEventListener("click", () => dialog.close());
 }
 
 function addEditBtnListener(editPopupBtn, todo) {
@@ -115,7 +112,6 @@ function addEditBtnListener(editPopupBtn, todo) {
   });
 }
 
-// utilty functions
 function getHighlightedWorkspace() {
   const workspaceItems = document.querySelectorAll(".workspace-item");
   const workspacesArray = Array.from(workspaceItems);
@@ -187,7 +183,7 @@ function addTodoDom() {
     descriptionInput.value = "";
 
     displayHighlightedWorkspaceTodo(getHighlightedWorkspace());
-    todoAddDialog.close();
+    todoDialog.close();
   }
 }
 
@@ -370,7 +366,5 @@ export function displayWorkspaceTodo(workspace) {
     todoContainer.appendChild(todoDiv);
   });
 }
-
-function addTodoDescriptionListerner() {}
 
 addEventListeners();
