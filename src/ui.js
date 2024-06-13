@@ -72,6 +72,49 @@ function addEventListeners() {
   });
 }
 
+function addEditBtnListener(editPopupBtn, todo) {
+  editPopupBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    const todoEditModal = document.querySelector("#todo-edit-dialog");
+    const todoEditBtn = document.querySelector("#edit-todo");
+    const todoCloseEditBtn = document.querySelector("#close-edit-todo");
+    const todoTitleInput = document.querySelector("#todo-edit-title");
+    const todoDescriptionInput = document.querySelector(
+      "#todo-edit-description"
+    );
+    const todoDueDate = document.querySelector("#todo-edit-due-date");
+    const todoPriority = document.querySelector("#todo-edit-select-priority");
+
+    // if use clicks on update, populate todo and save it in localstorage
+    todoEditBtn.addEventListener("click", () => {
+      let parsedDate = parse(todoDueDate.value, "yyyy-MM-dd", new Date());
+
+      todo.title = todoTitleInput.value;
+      todo.description = todoDescriptionInput.value;
+      todo.dueDate = format(parsedDate, "PPP", new Date());
+      todo.priority = todoPriority.options[todoPriority.selectedIndex].value;
+
+      updateLocalStorage();
+      displayHighlightedWorkspaceTodo(getHighlightedWorkspace());
+      todoEditModal.close();
+    });
+
+    todoCloseEditBtn.addEventListener("click", () => {
+      todoEditModal.close();
+    });
+
+    // if use click on edit btn retrieve previous values
+    let parsedDate = parse(todo.dueDate, "PPP", new Date());
+    todoTitleInput.value = todo.title;
+    todoDescriptionInput.value = todo.description;
+    todoDueDate.value = format(parsedDate, "yyyy-MM-dd", new Date());
+    todoPriority.value = todo.priority;
+
+    todoEditModal.showModal();
+  });
+}
+
 // utilty functions
 function getHighlightedWorkspace() {
   const workspaceItems = document.querySelectorAll(".workspace-item");
@@ -242,7 +285,7 @@ export function displayWorkspaceTodo(workspace) {
     const statusCheckbox = document.createElement("input");
     const todoDueDateP = document.createElement("p");
     const deleteBtn = document.createElement("button");
-    const editBtn = document.createElement("button");
+    const editPopupBtn = document.createElement("button");
 
     // add title and checkbox to left side of preview
     todoLeftDiv.classList.add("todo-left");
@@ -254,7 +297,7 @@ export function displayWorkspaceTodo(workspace) {
     statusCheckbox.addEventListener("click", (e) => {
       e.stopPropagation();
       todo.status = statusCheckbox.checked;
-      localStorage.setItem("workspaces", JSON.stringify(getWorkspaces()));
+      updateLocalStorage();
       titleP.classList.toggle("todo-done");
       todoDueDateP.classList.toggle("todo-done");
     });
@@ -311,52 +354,13 @@ export function displayWorkspaceTodo(workspace) {
       }
     });
 
-    editBtn.innerText = "Edit";
-    editBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-
-      const todoEditModal = document.querySelector("#todo-edit-dialog");
-      const todoEditBtn = document.querySelector("#edit-todo");
-      const todoCloseEditBtn = document.querySelector("#close-edit-todo");
-      const todoTitleInput = document.querySelector("#todo-edit-title");
-      const todoDescriptionInput = document.querySelector(
-        "#todo-edit-description"
-      );
-      const todoDueDate = document.querySelector("#todo-edit-due-date");
-      const todoPriority = document.querySelector("#todo-edit-select-priority");
-
-      // if use clicks on update, populate todo and save it in localstorage
-      todoEditBtn.addEventListener("click", () => {
-        let parsedDate = parse(todoDueDate.value, "yyyy-MM-dd", new Date());
-
-        todo.title = todoTitleInput.value;
-        todo.description = todoDescriptionInput.value;
-        todo.dueDate = format(parsedDate, "PPP", new Date());
-        todo.priority = todoPriority.options[todoPriority.selectedIndex].value;
-
-        updateLocalStorage();
-        displayHighlightedWorkspaceTodo(getHighlightedWorkspace());
-        todoEditModal.close();
-      });
-
-      todoCloseEditBtn.addEventListener("click", () => {
-        todoEditModal.close();
-      });
-
-      // if use click on edit btn retrieve previous values
-      let parsedDate = parse(todo.dueDate, "PPP", new Date());
-      todoTitleInput.value = todo.title;
-      todoDescriptionInput.value = todo.description;
-      todoDueDate.value = format(parsedDate, "yyyy-MM-dd", new Date());
-      todoPriority.value = todo.priority;
-
-      todoEditModal.showModal();
-    });
+    editPopupBtn.innerText = "Edit";
+    addEditBtnListener(editPopupBtn, todo);
 
     todoRightDiv.classList.add("todo-info");
 
     todoRightDiv.append(todoDueDateP);
-    todoRightDiv.append(editBtn);
+    todoRightDiv.append(editPopupBtn);
     todoRightDiv.append(deleteBtn);
 
     todoPreviewDiv.appendChild(todoLeftDiv);
@@ -366,5 +370,7 @@ export function displayWorkspaceTodo(workspace) {
     todoContainer.appendChild(todoDiv);
   });
 }
+
+function addTodoDescriptionListerner() {}
 
 addEventListeners();
