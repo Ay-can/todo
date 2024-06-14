@@ -308,3 +308,7 @@ input[type="checkbox"] {
 .todo-done {
   text-decoration: line-through;
 }
+
+label[for="workspace-title"] {
+  text-align: center;
+}
